@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F2FF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- App Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="UniFlow"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="#3F51B5"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your AI-Powered Study Assistant"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="28dp" />
+
+        <!-- Row 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:id="@+id/card_lecture"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#FFFFFF"
+                android:elevation="4dp"
+                android:layout_marginEnd="8dp"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📖"
+                    android:textSize="28sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LectureSnap"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A"
+                    android:layout_marginTop="6dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Snap &amp; summarize notes"
+                    android:textSize="10sp"
+                    android:textColor="#888888"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/card_timetable"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#FFFFFF"
+                android:elevation="4dp"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📅"
+                    android:textSize="28sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TimetableSnap"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A"
+                    android:layout_marginTop="6dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Scan your schedule"
+                    android:textSize="10sp"
+                    android:textColor="#888888"
+                    android:gravity="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Row 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:id="@+id/card_exam"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#FFFFFF"
+                android:elevation="4dp"
+                android:layout_marginEnd="8dp"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔮"
+                    android:textSize="28sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ExamOracle"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A"
+                    android:layout_marginTop="6dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Predict exam topics"
+                    android:textSize="10sp"
+                    android:textColor="#888888"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/card_deadline"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#FFFFFF"
+                android:elevation="4dp"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⏰"
+                    android:textSize="28sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DeadlineGenie"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A"
+                    android:layout_marginTop="6dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Build your study plan"
+                    android:textSize="10sp"
+                    android:textColor="#888888"
+                    android:gravity="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Row 3 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:id="@+id/card_burnout"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#FFFFFF"
+                android:elevation="4dp"
+                android:layout_marginEnd="8dp"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔥"
+                    android:textSize="28sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BurnoutRadar"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A"
+                    android:layout_marginTop="6dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Check burnout risk"
+                    android:textSize="10sp"
+                    android:textColor="#888888"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/card_concept"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#FFFFFF"
+                android:elevation="4dp"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔍"
+                    android:textSize="28sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ConceptSnap"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A"
+                    android:layout_marginTop="6dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Explain any diagram"
+                    android:textSize="10sp"
+                    android:textColor="#888888"
+                    android:gravity="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Row 4 — History (full width) -->
+        <LinearLayout
+            android:id="@+id/card_history"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#FFFFFF"
+            android:elevation="4dp"
+            android:paddingHorizontal="20dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📂"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="History"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A1A" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View all saved notes, plans and concepts"
+                    android:textSize="11sp"
+                    android:textColor="#888888" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

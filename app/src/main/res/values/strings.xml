@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">UniFlow</string>
+    <string name="point_at_lecture_notes_and_tap_capture">Point at lecture notes and tap Capture</string>
+    <string name="capture_notes">📸 Capture Notes</string>
+    <string name="exam_date_e_g_may_15_2026">Exam Date (e.g. May 15, 2026)</string>
+    <string name="toggle_torch">Toggle torch</string>
+    <string name="subject_name_e_g_physics_math">Subject Name (e.g. Physics, Math)</string>
+    <string name="point_camera_at_your_past_exam_paper_and_tap_scan">Point camera at your past exam paper and tap Scan</string>
+    <string name="scan_exam_paper">Scan Exam Paper</string>
+    <string name="examoracle_predictions">🔮 ExamOracle Predictions</string>
+    <string name="home">Home</string>
+    <string name="lecture">Lecture</string>
+    <string name="timetable">Timetable</string>
+    <string name="exam">Exam</string>
+    <string name="deadline">Deadline</string>
+    <string name="burnout">Burnout</string>
+    <string name="concept">Concept</string>
+    <string name="conceptsnap">ConceptSnap</string>
+    <string name="photo_a_diagram_or_formula_gemini_explains_it_instantly">Photo a diagram or formula — Gemini explains it instantly.</string>
+    <string name="start_camera">Start Camera</string>
+    <string name="tap_above_to_start_camera_and_capture_a_concept">Tap above to start camera and capture a concept.</string>
+    <string name="optional_ask_a_specific_question_about_this_concept">Optional: Ask a specific question about this concept</string>
+    <string name="explain_this_concept">Explain This Concept</string>
+</resources>

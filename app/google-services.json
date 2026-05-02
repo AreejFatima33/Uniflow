@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "114123182219",
+    "project_id": "uniflow-a87a9",
+    "storage_bucket": "uniflow-a87a9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114123182219:android:2dd7490995d2fa5d38448e",
+        "android_client_info": {
+          "package_name": "com.students.uniflow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyRKog7dPocjPuTa_3JR3jjlXIc3-3le4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

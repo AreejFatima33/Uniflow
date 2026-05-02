@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <!-- Home -->
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.students.uniflow.ui.home.HomeFragment"
+        android:label="Home" />
+
+    <!-- Week 3: LectureSnap -->
+    <fragment
+        android:id="@+id/nav_lecture"
+        android:name="com.students.uniflow.ui.lecturesnap.LectureSnapFragment"
+        android:label="LectureSnap">
+        <action
+            android:id="@+id/action_lectureSnap_to_lectureResult"
+            app:destination="@id/nav_lecture_result" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_lecture_result"
+        android:name="com.students.uniflow.ui.lecturesnap.LectureResultFragment"
+        android:label="Lecture Result" />
+
+    <!-- Week 3: TimetableSnap -->
+    <fragment
+        android:id="@+id/nav_timetable"
+        android:name="com.students.uniflow.ui.timetablesnap.TimetableSnapFragment"
+        android:label="TimetableSnap">
+        <action
+            android:id="@+id/action_timetableSnap_to_timetableDisplay"
+            app:destination="@id/nav_timetable_display" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_timetable_snap"
+        android:name="com.students.uniflow.ui.timetablesnap.TimetableSnapFragment"
+        android:label="TimetableSnap" />
+
+    <fragment
+        android:id="@+id/nav_timetable_display"
+        android:name="com.students.uniflow.ui.timetablesnap.TimetableDisplayFragment"
+        android:label="Timetable Display">
+        <argument
+            android:name="timetable_json"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <!-- Week 4: ExamOracle -->
+    <fragment
+        android:id="@+id/nav_exam"
+        android:name="com.students.uniflow.ui.examoracle.ExamOracleFragment"
+        android:label="ExamOracle">
+        <action
+            android:id="@+id/action_examOracle_to_examResult"
+            app:destination="@id/nav_exam_result" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_exam_result"
+        android:name="com.students.uniflow.ui.examoracle.ExamResultFragment"
+        android:label="Exam Result">
+        <argument
+            android:name="exam_result_json"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <!-- Week 4: DeadlineGenie -->
+    <fragment
+        android:id="@+id/nav_deadline"
+        android:name="com.students.uniflow.ui.deadlinegenie.DeadlineGenieFragment"
+        android:label="DeadlineGenie">
+        <action
+            android:id="@+id/action_deadlineGenie_to_studyPlan"
+            app:destination="@id/nav_study_plan" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_study_plan"
+        android:name="com.students.uniflow.ui.deadlinegenie.StudyPlanFragment"
+        android:label="Study Plan">
+        <argument
+            android:name="study_plan_json"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <!-- BurnoutRadar -->
+    <fragment
+        android:id="@+id/nav_burnout_radar"
+        android:name="com.students.uniflow.ui.burnoutradar.BurnoutRadarFragment"
+        android:label="BurnoutRadar"
+        tools:layout="@layout/fragment_burnout_radar" />
+
+    <!-- ConceptSnap -->
+    <fragment
+        android:id="@+id/nav_concept_snap"
+        android:name="com.students.uniflow.ui.conceptsnap.ConceptSnapFragment"
+        android:label="ConceptSnap"
+        tools:layout="@layout/fragment_concept_snap">
+        <action
+            android:id="@+id/action_conceptSnap_to_conceptResult"
+            app:destination="@id/nav_concept_result" />
+    </fragment>
+
+    <!-- ConceptResult -->
+    <fragment
+        android:id="@+id/nav_concept_result"
+        android:name="com.students.uniflow.ui.conceptsnap.ConceptResultFragment"
+        android:label="Concept Result"
+        tools:layout="@layout/fragment_concept_result">
+        <argument
+            android:name="concept_json"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_history"
+        android:name="com.students.uniflow.ui.history.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_history" />
+
+</navigation>
