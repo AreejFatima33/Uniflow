@@ -13,13 +13,14 @@ import com.students.uniflow.BuildConfig
 import com.students.uniflow.data.local.AppDatabase
 import com.students.uniflow.data.local.entity.ConceptEntity
 import com.students.uniflow.data.model.ConceptResult
+import com.students.uniflow.utils.CacheHelper
 import com.students.uniflow.utils.GeminiPrompts
 import kotlinx.coroutines.delay
 
 class ConceptRepository(private val context: Context) {
 
     private val gson = Gson()
-    private val conceptDao = AppDatabase.getDatabase(context).conceptDao()
+    private val conceptDao = AppDatabase.getInstance(context).conceptDao()
 
     private val geminiVision = GenerativeModel(
         modelName = "gemini-2.5-flash",
@@ -38,7 +39,11 @@ class ConceptRepository(private val context: Context) {
                 text(prompt)
             }
 
-            val rawResponse = sendVisionWithRetry(inputContent)
+            val cacheKey = imageUri.toString()
+            val rawResponse = CacheHelper.getCached(context, cacheKey, "concept")
+                ?: sendVisionWithRetry(inputContent).also { response ->
+                    CacheHelper.saveCache(context, cacheKey, "concept", response)
+                }
             android.util.Log.d("UNIFLOW_CONCEPT", "Gemini Vision response: $rawResponse")
 
             val cleanJson = cleanGeminiJson(rawResponse)

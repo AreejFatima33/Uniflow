@@ -127,4 +127,16 @@
         android:label="History"
         tools:layout="@layout/fragment_history" />
 
+    <fragment
+        android:id="@+id/nav_grade_predictor"
+        android:name="com.students.uniflow.ui.gradepredictor.GradePredictorFragment"
+        android:label="Grade Predictor"
+        tools:layout="@layout/fragment_grade_predictor"/>
+
+    <fragment
+        android:id="@+id/nav_voice_reminder"
+        android:name="com.students.uniflow.ui.voicereminder.VoiceReminderFragment"
+        android:label="Voice Reminder"
+        tools:layout="@layout/fragment_voice_reminder"/>
+
 </navigation>

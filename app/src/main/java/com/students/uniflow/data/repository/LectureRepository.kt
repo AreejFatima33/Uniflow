@@ -7,6 +7,7 @@ import com.students.uniflow.data.local.AppDatabase
 import com.students.uniflow.data.local.entity.NoteEntity
 import com.students.uniflow.data.model.NoteResult
 import com.students.uniflow.data.remote.GeminiClient
+import com.students.uniflow.utils.CacheHelper
 import com.students.uniflow.utils.GeminiPrompts
 import com.students.uniflow.utils.OcrHelper
 import kotlinx.coroutines.delay
@@ -16,7 +17,7 @@ import kotlin.coroutines.resume
 
 class LectureRepository(context: Context) {
 
-    private val noteDao = AppDatabase.getDatabase(context).noteDao()
+    private val noteDao = AppDatabase.getInstance(context).noteDao()
     private val gson = Gson()
     private val appContext = context.applicationContext
 
@@ -37,9 +38,12 @@ class LectureRepository(context: Context) {
             }
 
             // Step 2: Gemini (with retry)
+            // Step 2: Check cache first, then Gemini
             val prompt = GeminiPrompts.lectureSnap(extractedText)
-            val rawResponse = sendWithRetry(prompt)
-            android.util.Log.d("UNIFLOW_GEMINI", "Gemini raw response: $rawResponse")
+            val rawResponse = CacheHelper.getCached(appContext, extractedText, "lecture")
+                ?: sendWithRetry(prompt).also {
+                    CacheHelper.saveCache(appContext, extractedText, "lecture", it)
+                }
 
             // Step 3: Parse JSON
             val cleanJson = rawResponse

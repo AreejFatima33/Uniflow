@@ -11,7 +11,7 @@ import kotlinx.coroutines.delay
 
 class BurnoutRepository(context: Context) {
 
-    private val studyLogDao = AppDatabase.getDatabase(context).studyLogDao()
+    private val studyLogDao = AppDatabase. getInstance(context).studyLogDao()
     private val gson = Gson()
 
     // Log a study session — call this from each feature after successful AI response

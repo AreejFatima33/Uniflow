@@ -21,29 +21,29 @@ class HomeFragment : Fragment() {
         view.findViewById<View>(R.id.card_lecture).setOnClickListener {
             findNavController().navigate(R.id.nav_lecture)
         }
-
         view.findViewById<View>(R.id.card_timetable).setOnClickListener {
             findNavController().navigate(R.id.nav_timetable)
         }
-
         view.findViewById<View>(R.id.card_exam).setOnClickListener {
             findNavController().navigate(R.id.nav_exam)
         }
-
         view.findViewById<View>(R.id.card_deadline).setOnClickListener {
             findNavController().navigate(R.id.nav_deadline)
         }
-
         view.findViewById<View>(R.id.card_burnout).setOnClickListener {
             findNavController().navigate(R.id.nav_burnout_radar)
         }
-
         view.findViewById<View>(R.id.card_concept).setOnClickListener {
             findNavController().navigate(R.id.nav_concept_snap)
         }
-
         view.findViewById<View>(R.id.card_history).setOnClickListener {
             findNavController().navigate(R.id.nav_history)
+        }
+        view.findViewById<View>(R.id.card_grade).setOnClickListener {
+            findNavController().navigate(R.id.nav_grade_predictor)
+        }
+        view.findViewById<View>(R.id.card_voice).setOnClickListener {
+            findNavController().navigate(R.id.nav_voice_reminder)
         }
     }
 }

@@ -22,7 +22,7 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val db = AppDatabase.getDatabase(requireContext())
+        val db = AppDatabase.getInstance(requireContext())
 
         val layoutNotes     = view.findViewById<LinearLayout>(R.id.layout_notes_list)
         val layoutTimetable = view.findViewById<LinearLayout>(R.id.layout_timetable_list)

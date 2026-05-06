@@ -4,18 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.students.uniflow.data.local.dao.ConceptDao
-import com.students.uniflow.data.local.dao.ExamTopicDao
-import com.students.uniflow.data.local.dao.NoteDao
-import com.students.uniflow.data.local.dao.StudyLogDao
-import com.students.uniflow.data.local.dao.StudyPlanDao
-import com.students.uniflow.data.local.dao.TimetableDao
-import com.students.uniflow.data.local.entity.ConceptEntity
-import com.students.uniflow.data.local.entity.ExamTopicEntity
-import com.students.uniflow.data.local.entity.NoteEntity
-import com.students.uniflow.data.local.entity.StudyLogEntity
-import com.students.uniflow.data.local.entity.StudyPlanEntity
-import com.students.uniflow.data.local.entity.TimetableEntity
+import com.students.uniflow.data.local.dao.*
+import com.students.uniflow.data.local.entity.*
 
 @Database(
     entities = [
@@ -24,9 +14,12 @@ import com.students.uniflow.data.local.entity.TimetableEntity
         ExamTopicEntity::class,
         StudyPlanEntity::class,
         StudyLogEntity::class,
-        ConceptEntity::class      // NEW in version 6
+        ConceptEntity::class,
+        GeminiCacheEntity::class,
+        GradeEntity::class,
+        ReminderEntity::class
     ],
-    version = 6,
+    version = 8,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -36,23 +29,24 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun examTopicDao(): ExamTopicDao
     abstract fun studyPlanDao(): StudyPlanDao
     abstract fun studyLogDao(): StudyLogDao
-    abstract fun conceptDao(): ConceptDao    // NEW
+    abstract fun conceptDao(): ConceptDao
+    abstract fun geminiCacheDao(): GeminiCacheDao
+    abstract fun gradeDao(): GradeDao
+    abstract fun reminderDao(): ReminderDao
 
     companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
+        @Volatile private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(context: Context): AppDatabase {
+        fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
+                Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     "uniflow_database"
                 )
                     .fallbackToDestructiveMigration()
                     .build()
-                INSTANCE = instance
-                instance
+                    .also { INSTANCE = it }
             }
         }
     }

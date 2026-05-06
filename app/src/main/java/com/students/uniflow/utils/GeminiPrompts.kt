@@ -270,4 +270,24 @@ fun conceptSnap(userQuestion: String = ""): String = """
           "examTip": "one sentence tip on how this concept is typically tested in exams"
         }
     """.trimIndent()
+
+
+fun voiceReminder(spokenText: String): String = """
+    You are a reminder parser. Extract the task, date, and time from the spoken text below.
+    
+    RULES:
+    - Return ONLY raw JSON — no markdown, no backticks, no explanation
+    - Today's date is ${java.time.LocalDate.now()}
+    - "tomorrow" = ${java.time.LocalDate.now().plusDays(1)}
+    - For relative days (Monday, next Friday), calculate the actual date from today
+    - Time must be in 24-hour format HH:mm (e.g. "6 PM" → "18:00", "9 AM" → "09:00")
+    - If no time is mentioned, use "09:00"
+    - If no date is mentioned, assume today
+    
+    Return this exact JSON shape:
+    {"task": "task description", "date": "YYYY-MM-DD", "time": "HH:mm"}
+    
+    Spoken text:
+    $spokenText
+""".trimIndent()
 }

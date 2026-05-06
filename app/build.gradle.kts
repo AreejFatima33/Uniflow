@@ -41,6 +41,16 @@ android {
             "GEMINI_API_KEY",
             "\"${localProperties.getProperty("GEMINI_API_KEY", "")}\""
         )
+        buildConfigField(
+            "String",
+            "GEMINI_API_KEY_2",
+            "\"${localProperties.getProperty("GEMINI_API_KEY_2", "")}\""
+        )
+        buildConfigField(
+            "String",
+            "GEMINI_API_KEY_3",
+            "\"${localProperties.getProperty("GEMINI_API_KEY_3", "")}\""
+        )
     }
 
     buildFeatures {
@@ -72,6 +82,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.transport.api)
     ksp(libs.androidx.room.compiler)
     implementation(libs.text.recognition)
     implementation(platform(libs.firebase.bom))

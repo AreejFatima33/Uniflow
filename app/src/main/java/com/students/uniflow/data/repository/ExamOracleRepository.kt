@@ -7,6 +7,7 @@ import com.students.uniflow.data.local.AppDatabase
 import com.students.uniflow.data.local.entity.ExamTopicEntity
 import com.students.uniflow.data.model.ExamOracleResult
 import com.students.uniflow.data.remote.GeminiClient
+import com.students.uniflow.utils.CacheHelper
 import com.students.uniflow.utils.GeminiPrompts
 import com.students.uniflow.utils.OcrHelper
 import kotlinx.coroutines.delay
@@ -16,7 +17,7 @@ import kotlin.coroutines.resume
 
 class ExamOracleRepository(context: Context) {
 
-    private val examTopicDao = AppDatabase.getDatabase(context).examTopicDao()
+    private val examTopicDao = AppDatabase.getInstance(context).examTopicDao()
     private val gson = Gson()
     private val appContext = context.applicationContext
 
@@ -36,8 +37,10 @@ class ExamOracleRepository(context: Context) {
 
             // Step 2: Send to Gemini with retry
             val prompt = GeminiPrompts.examOracle(extractedText)
-            val rawResponse = sendWithRetry(prompt)
-            android.util.Log.d("UNIFLOW_GEMINI", "ExamOracle response: $rawResponse")
+            val rawResponse = CacheHelper.getCached(appContext, extractedText, "exam")
+                ?: sendWithRetry(prompt).also {
+                    CacheHelper.saveCache(appContext, extractedText, "exam", it)
+                }
 
             // Step 3: Clean JSON
             val cleanJson = cleanJson(rawResponse, useObject = true)

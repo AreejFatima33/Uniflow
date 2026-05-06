@@ -9,6 +9,7 @@ import com.students.uniflow.data.local.entity.TimetableEntity
 import com.students.uniflow.data.model.TimetableEntry
 import com.students.uniflow.data.remote.GeminiClient
 import com.students.uniflow.utils.AlarmHelper
+import com.students.uniflow.utils.CacheHelper
 import com.students.uniflow.utils.GeminiPrompts
 import com.students.uniflow.utils.OcrHelper
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,7 @@ import kotlin.coroutines.resume
 
 class TimetableRepository(context: Context) {
 
-    private val timetableDao = AppDatabase.getDatabase(context).timetableDao()
+    private val timetableDao = AppDatabase.getInstance(context).timetableDao()
     private val gson = Gson()
     private val appContext = context.applicationContext
 
@@ -34,9 +35,13 @@ class TimetableRepository(context: Context) {
                 return Result.failure(Exception("Could not read the image clearly. Please ensure the timetable is in English and the image is clear."))
             }
 
-            // Step 2: Gemini
+
+            // Step 2: Gemini (with cache)
             val prompt = GeminiPrompts.timetableSnap(extractedText)
-            val rawResponse = GeminiClient.sendPrompt(prompt)
+            val rawResponse = CacheHelper.getCached(appContext, extractedText, "timetable")
+                ?: GeminiClient.sendPrompt(prompt).also { response ->
+                    CacheHelper.saveCache(appContext, extractedText, "timetable", response)
+                }
 
             // Step 3: Parse JSON array
             val cleanJson = rawResponse

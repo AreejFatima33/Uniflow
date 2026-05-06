@@ -16,7 +16,7 @@ import kotlin.coroutines.resume
 
 class StudyPlanRepository(context: Context) {
 
-    private val studyPlanDao = AppDatabase.getDatabase(context).studyPlanDao()
+    private val studyPlanDao = AppDatabase.getInstance(context).studyPlanDao()
     private val gson = Gson()
     private val appContext = context.applicationContext
 
