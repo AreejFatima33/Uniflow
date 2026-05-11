@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/cream_bg">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:text="📇 My Class Schedule"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:paddingBottom="8dp" />
+        <FrameLayout android:layout_width="match_parent" android:layout_height="160dp">
+            <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                android:src="@drawable/bg_wavy_header" android:scaleType="fitXY"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                android:gravity="center_vertical" android:paddingHorizontal="20dp" android:layout_marginBottom="34dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="📇 My Class Schedule"
+                    android:fontFamily="@font/playfair_display_bold"
+                    android:textSize="22sp" android:textColor="@color/text_on_maroon"/>
+            </LinearLayout>
+        </FrameLayout>
 
-        <TextView
-            android:id="@+id/tv_empty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No timetable scanned yet. Use TimetableSnap to add your schedule."
-            android:visibility="gone"
-            android:gravity="center"
-            android:paddingTop="48dp"
-            android:textSize="14sp" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="16dp">
 
-        <LinearLayout
-            android:id="@+id/schedule_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            <TextView android:id="@+id/tv_empty"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="No timetable scanned yet. Use TimetableSnap to add your schedule."
+                android:fontFamily="@font/inter_regular"
+                android:textSize="14sp" android:textColor="@color/text_hint"
+                android:visibility="gone" android:gravity="center" android:paddingTop="48dp"/>
+
+            <LinearLayout android:id="@+id/schedule_container"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

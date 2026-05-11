@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cream_bg">
+
+    <!-- Wavy blob top-right -->
+    <ImageView
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="-40dp"
+        android:layout_marginEnd="-40dp"
+        android:src="@drawable/bg_splash_blob_tr"
+        android:scaleType="fitXY"
+        android:contentDescription="@null"/>
+
+    <!-- Wavy blob bottom-left -->
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="bottom|start"
+        android:layout_marginBottom="-30dp"
+        android:layout_marginStart="-30dp"
+        android:src="@drawable/bg_splash_blob_bl"
+        android:scaleType="fitXY"
+        android:contentDescription="@null"/>
+
+    <!-- Center content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp">
+
+        <!-- Glass graduation cap -->
+        <ImageView
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:src="@drawable/graduatebook_cap"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="36dp"
+            android:contentDescription="@null"/>
+
+        <!-- UniFlow -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UniFlow"
+            android:fontFamily="@font/playfair_display_bold"
+            android:textSize="52sp"
+            android:textColor="@color/maroon_dark"
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Tagline -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Academic Potential Unlocked"
+            android:fontFamily="@font/inter_regular"
+            android:textSize="14sp"
+            android:textColor="@color/text_hint"
+            android:gravity="center"
+            android:layout_marginBottom="56dp"/>
+
+        <!-- Get Started — outline pill button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_get_started"
+            android:layout_width="240dp"
+            android:layout_height="52dp"
+            android:text="Get Started"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="15sp"
+            android:textColor="@color/maroon_dark"
+            android:letterSpacing="0.02"
+            app:cornerRadius="26dp"
+            app:strokeColor="@color/maroon_dark"
+            app:strokeWidth="1.5dp"
+            app:backgroundTint="@android:color/transparent"
+            app:rippleColor="#22500000"/>
+
+    </LinearLayout>
+
+</FrameLayout>

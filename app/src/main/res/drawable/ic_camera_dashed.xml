@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="2dp"
+                android:color="#B06060"
+                android:dashWidth="6dp"
+                android:dashGap="4dp"/>
+            <corners android:radius="12dp"/>
+            <solid android:color="@android:color/transparent"/>
+        </shape>
+    </item>
+    <item
+        android:top="10dp"
+        android:bottom="10dp"
+        android:left="10dp"
+        android:right="10dp">
+        <vector
+            android:width="36dp"
+            android:height="36dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+            <path
+                android:fillColor="#B06060"
+                android:pathData="M12,9a3,3 0,1 0,0 6,3 3,0 0,0 0,-6zM12,13a1,1 0,1 1,0 -2,1 1,0 0,1 0,2z"/>
+            <path
+                android:fillColor="#B06060"
+                android:pathData="M20,5h-2.17l-1.24,-1.35A2,2 0,0 0,15.12 3H8.88A2,2 0,0 0,7.41 3.65L6.17 5H4A2,2 0,0 0,2 7v12a2,2 0,0 0,2 2h16a2,2 0,0 0,2 -2V7A2,2 0,0 0,20 5zM20,19H4V7h3a1,1 0,0 0,0.76 -0.35l1.42,-1.55a0.08,0.08 0,0 1,0.06 0H15.76a0.08,0.08 0,0 1,0.06 0L17.24 6.65A1,1 0,0 0,18 7h2z"/>
+        </vector>
+    </item>
+</layer-list>

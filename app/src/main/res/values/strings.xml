@@ -21,4 +21,13 @@
     <string name="tap_above_to_start_camera_and_capture_a_concept">Tap above to start camera and capture a concept.</string>
     <string name="optional_ask_a_specific_question_about_this_concept">Optional: Ask a specific question about this concept</string>
     <string name="explain_this_concept">Explain This Concept</string>
+    <string name="se">🔍</string>
+    <string name="your_academic_potential_unlocked">Your Academic Potential Unlocked</string>
+    <string name="student">Student</string>
+    <string name="gradepredictor">GradePredictor</string>
+    <string name="goal">Goal</string>
+    <string name="current_50k">Current 50K</string>
+    <string name="_4_0">4.0</string>
+    <string name="scan_notes">Scan Notes</string>
+    <string name="analyze_handwritten_notes_and_extract_key_information">Analyze handwritten notes and extract key information</string>
 </resources>

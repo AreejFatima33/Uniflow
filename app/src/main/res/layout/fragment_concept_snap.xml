@@ -2,73 +2,84 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/cream_bg">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Camera Preview -->
         <androidx.camera.view.PreviewView
             android:id="@+id/camera_preview_concept"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
-        <!-- Status text -->
-        <TextView
-            android:id="@+id/tv_concept_status"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:text="Point camera at a diagram or formula, then tap Capture."
-            android:gravity="center"
-            android:textSize="14sp"
-            android:textColor="#444444" />
+            android:orientation="vertical"
+            android:background="@color/cream_bg"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="16dp">
 
-        <!-- Optional question -->
-        <EditText
-            android:id="@+id/et_concept_question"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Optional: Ask a specific question"
-            android:textSize="14sp"
-            android:padding="12dp"
-            android:layout_marginHorizontal="16dp"
-            android:background="@android:color/white"
-            android:inputType="text"
-            android:autofillHints="no" />
+            <TextView
+                android:id="@+id/tv_concept_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Point camera at a diagram or formula, then tap Capture."
+                android:gravity="center"
+                android:fontFamily="@font/inter_regular"
+                android:textSize="13sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="10dp"/>
 
-        <!-- Progress -->
-        <ProgressBar
-            android:id="@+id/progress_concept"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Optional: Ask a specific question"
+                style="@style/UniFlow.TextInput"
+                android:layout_marginBottom="10dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_concept_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:fontFamily="@font/inter_regular"
+                    android:autofillHints="no"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Single capture button -->
-        <Button
-            android:id="@+id/btn_capture_concept"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="Capture &amp; Explain"
-            android:textSize="16sp" />
+            <ProgressBar
+                android:id="@+id/progress_concept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_capture_concept"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Capture &amp; Explain"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="16sp"
+                style="@style/UniFlow.Button.Primary"/>
+        </LinearLayout>
     </LinearLayout>
 
-    <!-- Torch button overlaid top-right — same as LectureSnap and TimetableSnap -->
     <ImageButton
         android:id="@+id/btn_torch_concept"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:layout_gravity="top|end"
         android:layout_margin="12dp"
         android:src="@android:drawable/btn_star_big_on"
-        android:background="@android:color/transparent"
+        android:background="@drawable/bg_profile_chip"
         android:contentDescription="Toggle torch"
-        app:tint="#888888" />
+        android:padding="8dp"
+        app:tint="@color/text_on_maroon"/>
 
 </FrameLayout>

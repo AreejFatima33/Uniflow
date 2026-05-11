@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#F5F5F5"
-    android:padding="16dp">
+    android:background="@color/cream_bg">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,106 +11,117 @@
         android:orientation="vertical">
 
         <!-- Header -->
-        <TextView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="📑 DeadlineGenie"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="#1A237E"
-            android:layout_marginBottom="8dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Enter details, then photograph your syllabus"
-            android:textSize="14sp"
-            android:textColor="#666666"
-            android:layout_marginBottom="20dp" />
-
-        <!-- Subject name input -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Subject Name (e.g. Data Structures)"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginBottom="12dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etSubjectName"
+            android:layout_height="100dp">
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Exam date input -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/exam_date_e_g_may_15_2026"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginBottom="20dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etExamDate"
+                android:layout_height="match_parent"
+                android:src="@drawable/bg_wavy_header"
+                android:scaleType="fitXY"/>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="20dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="📑 DeadlineGenie"
+                        android:fontFamily="@font/playfair_display_bold"
+                        android:textSize="22sp" android:textColor="@color/text_on_maroon"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Enter details, then photograph your syllabus"
+                        android:fontFamily="@font/inter_regular"
+                        android:textSize="12sp" android:textColor="#CCF5F0EB"/>
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
 
-        <!-- Camera preview -->
-        <!-- Camera label + torch row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="4dp">
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <TextView
-                android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Camera Preview"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#333333" />
+                android:hint="Subject Name (e.g. Data Structures)"
+                style="@style/UniFlow.TextInput"
+                android:layout_marginBottom="12dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSubjectName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageButton
-                android:id="@+id/btnTorch"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@android:drawable/btn_star_big_on"
-                android:background="@android:color/transparent"
-                android:contentDescription="Toggle torch"
-                app:tint="#333333" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/exam_date_e_g_may_15_2026"
+                style="@style/UniFlow.TextInput"
+                android:layout_marginBottom="20dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etExamDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Camera label + torch -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Camera Preview"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="14sp" android:textColor="@color/text_primary"/>
+                <ImageButton
+                    android:id="@+id/btnTorch"
+                    android:layout_width="40dp" android:layout_height="40dp"
+                    android:src="@android:drawable/btn_star_big_on"
+                    android:background="@drawable/bg_profile_chip"
+                    android:contentDescription="Toggle torch"
+                    android:padding="8dp"
+                    app:tint="@color/maroon_primary"/>
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/border_light"
+                app:strokeWidth="1dp">
+                <androidx.camera.view.PreviewView
+                    android:id="@+id/previewView"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCapture"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="📷 Photograph Syllabus"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="16sp"
+                style="@style/UniFlow.Button.Primary"/>
+
         </LinearLayout>
-
-        <androidx.camera.view.PreviewView
-            android:id="@+id/previewView"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Progress bar -->
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:layout_marginBottom="8dp" />
-
-        <!-- Capture button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCapture"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="📷 Photograph Syllabus"
-            android:textSize="16sp"
-            android:paddingVertical="12dp"
-            app:cornerRadius="12dp" />
-
     </LinearLayout>
-
 </androidx.core.widget.NestedScrollView>

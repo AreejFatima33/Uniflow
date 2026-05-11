@@ -1,9 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
     <style name="Base.Theme.UniFlow" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/maroon_primary</item>
+        <item name="colorOnPrimary">@color/text_on_maroon</item>
+        <item name="colorPrimaryContainer">@color/maroon_surface</item>
+        <item name="colorOnPrimaryContainer">@color/maroon_dark</item>
+        <item name="colorSecondary">@color/accent_gold</item>
+        <item name="colorOnSecondary">@color/text_primary</item>
+        <item name="colorSecondaryContainer">@color/cream_deep</item>
+        <item name="colorOnSecondaryContainer">@color/text_primary</item>
+        <item name="colorSurface">@color/cream_card</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorOutline">@color/cream_deep</item>
+        <item name="colorError">@color/error_red</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="android:colorBackground">@color/cream_bg</item>
+        <item name="android:windowBackground">@color/cream_bg</item>
+        <item name="android:statusBarColor">@color/maroon_dark</item>
+        <item name="android:navigationBarColor">@color/cream_bg</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="bottomNavigationStyle">@style/UniFlowBottomNav</item>
     </style>
 
-    <style name="Theme.UniFlow" parent="Base.Theme.UniFlow" />
+    <style name="Theme.UniFlow" parent="Base.Theme.UniFlow"/>
+
+    <!-- Card -->
+    <style name="UniFlow.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/cream_card</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="strokeColor">@color/cream_deep</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="UniFlowBottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/maroon_dark</item>
+        <item name="backgroundTint">@color/maroon_dark</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <!-- Primary Button -->
+    <style name="UniFlow.Button.Primary" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/maroon_primary</item>
+        <item name="android:textColor">@color/text_on_maroon</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+    </style>
+
+    <!-- Outlined Button -->
+    <style name="UniFlow.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/maroon_primary</item>
+        <item name="android:textColor">@color/maroon_primary</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+    </style>
+
+    <!-- Text Styles -->
+    <style name="UniFlow.Text.Title" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:fontFamily">@font/playfair_display_bold</item>
+        <item name="android:textColor">@color/maroon_dark</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="UniFlow.Text.Header" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/playfair_display_bold</item>
+        <item name="android:textColor">@color/maroon_dark</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="UniFlow.Text.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Input -->
+    <style name="UniFlow.TextInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/maroon_primary</item>
+        <item name="hintTextColor">@color/maroon_primary</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+    </style>
+
 </resources>

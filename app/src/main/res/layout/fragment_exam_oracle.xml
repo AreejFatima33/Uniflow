@@ -13,40 +13,41 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/cardInstructions"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Torch button — top right corner over preview -->
     <ImageButton
         android:id="@+id/btnTorch"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:src="@android:drawable/btn_star_big_on"
-        android:background="@android:color/transparent"
+        android:background="@drawable/bg_profile_chip"
         android:contentDescription="Toggle torch"
         android:layout_margin="12dp"
+        android:padding="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="#FFFFFF" />
+        app:tint="@color/text_on_maroon"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardInstructions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="12dp"
+        app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/cream_card"
+        android:layout_marginHorizontal="16dp"
         app:layout_constraintBottom_toTopOf="@id/tilPaperName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/point_camera_at_your_past_exam_paper_and_tap_scan"
+            android:fontFamily="@font/inter_regular"
             android:textSize="14sp"
-            android:textColor="#F44336"
+            android:textColor="@color/maroon_primary"
             android:padding="16dp"
-            android:gravity="center" />
+            android:gravity="center"/>
     </androidx.cardview.widget.CardView>
 
     <ProgressBar
@@ -57,26 +58,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilPaperName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/subject_name_e_g_physics_math"
-        android:layout_marginHorizontal="24dp"
+        style="@style/UniFlow.TextInput"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@id/btnCapture"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPaperName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:maxLines="1" />
-
+            android:fontFamily="@font/inter_regular"
+            android:maxLines="1"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -84,13 +85,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/scan_exam_paper"
+        android:fontFamily="@font/inter_medium"
         android:textSize="16sp"
         android:paddingHorizontal="32dp"
-        android:paddingVertical="12dp"
+        android:paddingVertical="14dp"
         android:layout_marginBottom="24dp"
-        app:cornerRadius="24dp"
+        style="@style/UniFlow.Button.Primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

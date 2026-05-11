@@ -23,7 +23,7 @@ class BurnoutRadarFragment : Fragment() {
     // Views
     private lateinit var btnAnalyze: Button
     private lateinit var progressBar: ProgressBar
-    private lateinit var layoutResult: LinearLayout
+    private lateinit var layoutResult: com.google.android.material.card.MaterialCardView
     private lateinit var tvRiskLevel: TextView
     private lateinit var tvSummary: TextView
     private lateinit var tvSuggestions: TextView

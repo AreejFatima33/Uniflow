@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@color/cream_bg">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,89 +11,102 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <!-- Title -->
         <TextView
             android:id="@+id/tv_concept_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="#1A1A1A"
-            android:layout_marginBottom="20dp" />
+            android:fontFamily="@font/playfair_display_bold"
+            android:textSize="24sp"
+            android:textColor="@color/maroon_dark"
+            android:layout_marginBottom="20dp"/>
 
         <!-- Simple Explanation -->
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📖 Simple Explanation"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#333333"
-            android:layout_marginBottom="6dp" />
-
-        <TextView
-            android:id="@+id/tv_simple_explanation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#444444"
-            android:lineSpacingMultiplier="1.5"
-            android:background="@android:color/white"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/cream_card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/border_light"
+            app:strokeWidth="1dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="📖 Simple Explanation"
+                    android:fontFamily="@font/playfair_display_bold"
+                    android:textSize="15sp" android:textColor="@color/maroon_dark"
+                    android:layout_marginBottom="8dp"/>
+                <TextView android:id="@+id/tv_simple_explanation"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textSize="14sp" android:textColor="@color/text_secondary"
+                    android:lineSpacingMultiplier="1.5"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Analogy -->
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🌍 Real Life Analogy"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#333333"
-            android:layout_marginBottom="6dp" />
-
-        <TextView
-            android:id="@+id/tv_analogy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#444444"
-            android:lineSpacingMultiplier="1.5"
-            android:background="#E8F5E9"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/maroon_surface"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="🌍 Real Life Analogy"
+                    android:fontFamily="@font/playfair_display_bold"
+                    android:textSize="15sp" android:textColor="@color/maroon_dark"
+                    android:layout_marginBottom="8dp"/>
+                <TextView android:id="@+id/tv_analogy"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textSize="14sp" android:textColor="@color/text_secondary"
+                    android:lineSpacingMultiplier="1.5"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Key Points -->
-        <TextView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🔑 Key Points"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#333333"
-            android:layout_marginBottom="6dp" />
-
-        <TextView
-            android:id="@+id/tv_key_points"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#444444"
-            android:lineSpacingMultiplier="1.6"
-            android:background="@android:color/white"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/cream_card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/border_light"
+            app:strokeWidth="1dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="🔑 Key Points"
+                    android:fontFamily="@font/playfair_display_bold"
+                    android:textSize="15sp" android:textColor="@color/maroon_dark"
+                    android:layout_marginBottom="8dp"/>
+                <TextView android:id="@+id/tv_key_points"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textSize="14sp" android:textColor="@color/text_secondary"
+                    android:lineSpacingMultiplier="1.6"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Exam Tip -->
-        <TextView
-            android:id="@+id/tv_exam_tip"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#3F51B5"
-            android:textStyle="italic"
-            android:background="#E8EAF6"
-            android:padding="16dp" />
+            app:cardBackgroundColor="@color/maroon_primary"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+            <TextView android:id="@+id/tv_exam_tip"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:textSize="14sp" android:textColor="@color/text_on_maroon"
+                android:textStyle="italic" android:padding="16dp"
+                android:lineSpacingMultiplier="1.4"/>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>

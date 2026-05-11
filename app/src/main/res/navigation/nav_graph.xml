@@ -139,4 +139,10 @@
         android:label="Voice Reminder"
         tools:layout="@layout/fragment_voice_reminder"/>
 
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.students.uniflow.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile"/>
+
 </navigation>

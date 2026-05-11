@@ -2,4 +2,41 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Maroon family -->
+    <color name="maroon_dark">#3D0C0C</color>
+    <color name="maroon_primary">#6B1E1E</color>
+    <color name="maroon_medium">#8B3A3A</color>
+    <color name="maroon_light">#B05C5C</color>
+    <color name="maroon_surface">#F2E8E8</color>
+
+    <!-- Cream/Beige family -->
+    <color name="cream_bg">#F5F0EB</color>
+    <color name="cream_card">#FDFAF7</color>
+    <color name="cream_deep">#E0D5CC</color>
+
+    <!-- Text -->
+    <color name="text_primary">#2C1810</color>
+    <color name="text_secondary">#6B5448</color>
+    <color name="text_hint">#A08070</color>
+    <color name="text_on_maroon">#FFFDF9</color>
+
+    <!-- Accent -->
+    <color name="accent_gold">#C4956A</color>
+
+    <!-- Dark mode -->
+    <color name="dark_bg">#1A0A0A</color>
+    <color name="dark_surface">#2C1515</color>
+    <color name="dark_card">#3A1E1E</color>
+    <color name="dark_text_primary">#F5EDE8</color>
+    <color name="dark_text_secondary">#C4A898</color>
+
+    <!-- Status -->
+    <color name="success_green">#2E7D32</color>
+    <color name="warning_amber">#F57F17</color>
+    <color name="error_red">#C62828</color>
+
+    <color name="border_light">#E0D5CC</color>
+    <color name="border_medium">#C8B8B0</color>
+    <color name="cream_surface">#EDE5DB</color>
 </resources>
