@@ -103,6 +103,11 @@ class ConceptSnapFragment : Fragment() {
                         is ConceptUiState.Success -> {
                             progressBar.visibility = View.GONE
                             btnCapture.isEnabled = true
+
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                com.students.uniflow.data.repository.BurnoutRepository(requireContext())
+                                    .logStudySession("ConceptSnap", 10)
+                            }
                             val currentDest = findNavController().currentDestination?.id
                             if (currentDest == R.id.nav_concept_snap) {
                                 val json = Gson().toJson(state.result)

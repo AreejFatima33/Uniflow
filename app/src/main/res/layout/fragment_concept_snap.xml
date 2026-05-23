@@ -3,83 +3,173 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cream_bg">
+    android:background="#1A0A0A">
 
-    <LinearLayout
+    <!-- Camera preview full screen -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/camera_preview_concept"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent"/>
 
-        <androidx.camera.view.PreviewView
-            android:id="@+id/camera_preview_concept"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+    <!-- Viewfinder corners -->
+    <FrameLayout
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="160dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <View android:layout_width="28dp" android:layout_height="3dp"
+            android:layout_gravity="top|start"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="3dp" android:layout_height="28dp"
+            android:layout_gravity="top|start"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="28dp" android:layout_height="3dp"
+            android:layout_gravity="top|end"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="3dp" android:layout_height="28dp"
+            android:layout_gravity="top|end"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="28dp" android:layout_height="3dp"
+            android:layout_gravity="bottom|start"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="3dp" android:layout_height="28dp"
+            android:layout_gravity="bottom|start"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="28dp" android:layout_height="3dp"
+            android:layout_gravity="bottom|end"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="3dp" android:layout_height="28dp"
+            android:layout_gravity="bottom|end"
+            android:background="@color/text_on_maroon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/cream_bg"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="16dp">
+            android:layout_gravity="center"
+            android:text="Align diagram or formula here"
+            android:fontFamily="@font/inter_regular"
+            android:textSize="11sp"
+            android:textColor="#88FFFFFF"
+            android:background="#44000000"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"/>
+    </FrameLayout>
 
-            <TextView
-                android:id="@+id/tv_concept_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Point camera at a diagram or formula, then tap Capture."
-                android:gravity="center"
-                android:fontFamily="@font/inter_regular"
-                android:textSize="13sp"
-                android:textColor="@color/text_secondary"
-                android:layout_marginBottom="10dp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Optional: Ask a specific question"
-                style="@style/UniFlow.TextInput"
-                android:layout_marginBottom="10dp">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_concept_question"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:fontFamily="@font/inter_regular"
-                    android:autofillHints="no"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <ProgressBar
-                android:id="@+id/progress_concept"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:layout_marginBottom="8dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_capture_concept"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="Capture &amp; Explain"
-                android:fontFamily="@font/inter_medium"
-                android:textSize="16sp"
-                style="@style/UniFlow.Button.Primary"/>
-        </LinearLayout>
-    </LinearLayout>
-
+    <!-- Torch button -->
     <ImageButton
         android:id="@+id/btn_torch_concept"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_gravity="top|end"
-        android:layout_margin="12dp"
+        android:layout_margin="16dp"
         android:src="@android:drawable/btn_star_big_on"
         android:background="@drawable/bg_profile_chip"
         android:contentDescription="Toggle torch"
-        android:padding="8dp"
+        android:padding="10dp"
         app:tint="@color/text_on_maroon"/>
+
+    <!-- Bottom control panel -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:background="#F03D1010"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="24dp">
+
+        <!-- Title row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="14dp">
+
+            <LinearLayout
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_mic_ring_inner"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💡"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ConceptSnap"
+                    android:fontFamily="@font/playfair_display_bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/text_on_maroon"/>
+
+                <TextView
+                    android:id="@+id/tv_concept_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Point at a diagram, formula, or concept"
+                    android:fontFamily="@font/inter_regular"
+                    android:textSize="12sp"
+                    android:textColor="#CCF5F0EB"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Optional question input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Optional: Ask a specific question"
+            android:layout_marginBottom="12dp"
+            style="@style/UniFlow.TextInput">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_concept_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:fontFamily="@font/inter_regular"
+                android:maxLines="1"
+                android:textColor="@color/text_on_maroon"
+                android:autofillHints="no"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Progress bar -->
+        <ProgressBar
+            android:id="@+id/progress_concept"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            android:indeterminateTint="@color/text_on_maroon"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Capture button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_capture_concept"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Capture &amp; Explain"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="15sp"
+            android:textColor="@color/maroon_dark"
+            app:backgroundTint="@color/text_on_maroon"
+            app:cornerRadius="26dp"
+            app:elevation="0dp"/>
+    </LinearLayout>
 
 </FrameLayout>

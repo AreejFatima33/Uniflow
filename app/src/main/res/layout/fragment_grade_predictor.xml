@@ -11,171 +11,565 @@
         android:orientation="vertical">
 
         <!-- Header -->
-        <FrameLayout android:layout_width="match_parent" android:layout_height="160dp">
-            <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
-                android:src="@drawable/bg_wavy_header" android:scaleType="fitXY"/>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:gravity="center_vertical" android:paddingHorizontal="20dp" android:layout_marginBottom="34dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="🎓 Grade Predictor"
+        <FrameLayout
+            android:id="@+id/header_frame"
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/bg_wavy_header"
+                android:scaleType="fitXY"
+                android:contentDescription="@null"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="24dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="44dp">
+
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="12dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_chevron_back"
+                    android:background="@drawable/bg_profile_chip"
+                    android:contentDescription="Back"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginBottom="23dp"
+                    android:elevation="6dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="23dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="GradePredictor"
                         android:fontFamily="@font/playfair_display_bold"
-                        android:textSize="22sp" android:textColor="@color/text_on_maroon"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Enter your marks to see what grade you can achieve"
-                        android:fontFamily="@font/inter_regular"
-                        android:textSize="12sp" android:textColor="#CCF5F0EB"/>
+                        android:textSize="28sp"
+                        android:textColor="@color/text_on_maroon"
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Know exactly what you need in finals"
+                        android:fontFamily="@font/inter_medium"
+                        android:textSize="12sp"
+                        android:textColor="#CCF5F0EB"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_mic_ring_inner"
+                    android:gravity="center"
+                    android:layout_marginBottom="23dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🎓"
+                        android:textSize="22sp"/>
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" android:padding="20dp">
+        <!-- Form -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="24dp">
 
+            <!-- Subject name -->
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:hint="Subject Name" style="@style/UniFlow.TextInput"
-                android:layout_marginBottom="16dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Subject Name"
+                style="@style/UniFlow.TextInput"
+                android:layout_marginBottom="20dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSubject"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_regular" android:inputType="text"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Quiz -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Quiz Marks" android:fontFamily="@font/inter_medium"
-                android:textSize="14sp" android:textColor="@color/text_primary"
-                android:layout_marginBottom="8dp"/>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:layout_marginBottom="16dp">
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:hint="Obtained"
-                    style="@style/UniFlow.TextInput" android:layout_marginEnd="8dp">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etQuizMarks" android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:fontFamily="@font/inter_regular"
-                        android:inputType="numberDecimal"/>
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:hint="Total"
-                    style="@style/UniFlow.TextInput">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etQuizTotal" android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:fontFamily="@font/inter_regular"
-                        android:inputType="numberDecimal"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
+            <!-- Quiz card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/cream_card"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/border_light"
+                app:strokeWidth="1dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-            <!-- Assignment -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Assignment Marks" android:fontFamily="@font/inter_medium"
-                android:textSize="14sp" android:textColor="@color/text_primary"
-                android:layout_marginBottom="8dp"/>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:layout_marginBottom="16dp">
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:hint="Obtained"
-                    style="@style/UniFlow.TextInput" android:layout_marginEnd="8dp">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etAssignmentMarks" android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:fontFamily="@font/inter_regular"
-                        android:inputType="numberDecimal"/>
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:hint="Total"
-                    style="@style/UniFlow.TextInput">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etAssignmentTotal" android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:fontFamily="@font/inter_regular"
-                        android:inputType="numberDecimal"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Quiz"
+                            android:fontFamily="@font/playfair_display_bold"
+                            android:textSize="15sp"
+                            android:textColor="@color/text_primary"/>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/maroon_dark"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Weight: 10%"
+                                android:fontFamily="@font/inter_medium"
+                                android:textSize="11sp"
+                                android:textColor="@color/text_on_maroon"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"/>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
 
-            <!-- Midterm -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Midterm Marks" android:fontFamily="@font/inter_medium"
-                android:textSize="14sp" android:textColor="@color/text_primary"
-                android:layout_marginBottom="8dp"/>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:layout_marginBottom="24dp">
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:hint="Obtained"
-                    style="@style/UniFlow.TextInput" android:layout_marginEnd="8dp">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etMidtermMarks" android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:fontFamily="@font/inter_regular"
-                        android:inputType="numberDecimal"/>
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:hint="Total"
-                    style="@style/UniFlow.TextInput">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etMidtermTotal" android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:fontFamily="@font/inter_regular"
-                        android:inputType="numberDecimal"/>
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Obtained"
+                            style="@style/UniFlow.TextInput"
+                            android:layout_marginEnd="8dp">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etQuizMarks"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_regular"
+                                android:inputType="numberDecimal"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Total"
+                            style="@style/UniFlow.TextInput">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etQuizTotal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_regular"
+                                android:inputType="numberDecimal"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
+            <!-- Assignment card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/cream_card"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/border_light"
+                app:strokeWidth="1dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Assignment"
+                            android:fontFamily="@font/playfair_display_bold"
+                            android:textSize="15sp"
+                            android:textColor="@color/text_primary"/>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/maroon_dark"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Weight: 10%"
+                                android:fontFamily="@font/inter_medium"
+                                android:textSize="11sp"
+                                android:textColor="@color/text_on_maroon"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"/>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Obtained"
+                            style="@style/UniFlow.TextInput"
+                            android:layout_marginEnd="8dp">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etAssignmentMarks"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_regular"
+                                android:inputType="numberDecimal"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Total"
+                            style="@style/UniFlow.TextInput">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etAssignmentTotal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_regular"
+                                android:inputType="numberDecimal"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Midterm card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardBackgroundColor="@color/cream_card"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/border_light"
+                app:strokeWidth="1dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Midterm"
+                            android:fontFamily="@font/playfair_display_bold"
+                            android:textSize="15sp"
+                            android:textColor="@color/text_primary"/>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/maroon_dark"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Weight: 30%"
+                                android:fontFamily="@font/inter_medium"
+                                android:textSize="11sp"
+                                android:textColor="@color/text_on_maroon"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"/>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Obtained"
+                            style="@style/UniFlow.TextInput"
+                            android:layout_marginEnd="8dp">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etMidtermMarks"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_regular"
+                                android:inputType="numberDecimal"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Total"
+                            style="@style/UniFlow.TextInput">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etMidtermTotal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_regular"
+                                android:inputType="numberDecimal"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Calculate button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCalculate"
-                android:layout_width="match_parent" android:layout_height="56dp"
-                android:text="Calculate Grade" android:fontFamily="@font/inter_medium"
-                android:textSize="16sp" style="@style/UniFlow.Button.Primary"
-                android:layout_marginBottom="20dp"/>
-
-            <ProgressBar android:id="@+id/progressBar"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Calculate Grade"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="15sp"
+                android:textColor="@color/maroon_dark"
+                app:backgroundTint="@color/text_on_maroon"
+                app:cornerRadius="26dp"
+                app:elevation="0dp"
                 android:layout_marginBottom="16dp"/>
 
+            <!-- Progress bar -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/maroon_dark"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Result card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/resultCard"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:visibility="gone"
                 app:cardBackgroundColor="@color/cream_card"
-                app:cardCornerRadius="16dp" app:cardElevation="2dp"
-                app:strokeColor="@color/border_light" app:strokeWidth="1dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:padding="20dp">
-                    <TextView android:id="@+id/tvCurrentGrade"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:fontFamily="@font/playfair_display_bold"
-                        android:textSize="20sp" android:textColor="@color/maroon_dark"
-                        android:layout_marginBottom="8dp"/>
-                    <TextView android:id="@+id/tvCurrentScore"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/border_light"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Current grade row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="6dp">
+
+                        <TextView
+                            android:id="@+id/tvCurrentGrade"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/playfair_display_bold"
+                            android:textSize="20sp"
+                            android:textColor="@color/maroon_dark"/>
+
+                        <!-- Final weight badge -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/maroon_dark"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Final: 50%"
+                                android:fontFamily="@font/inter_medium"
+                                android:textSize="11sp"
+                                android:textColor="@color/text_on_maroon"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"/>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvCurrentScore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_regular"
-                        android:textSize="15sp" android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
                         android:layout_marginBottom="16dp"/>
-                    <View android:layout_width="match_parent" android:layout_height="1dp"
-                        android:background="@color/border_light" android:layout_marginBottom="16dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Marks needed in Final Exam:"
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/border_light"
+                        android:layout_marginBottom="14dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Marks needed in Final Exam"
                         android:fontFamily="@font/inter_medium"
-                        android:textSize="14sp" android:textColor="@color/text_primary"
-                        android:layout_marginBottom="10dp"/>
-                    <TextView android:id="@+id/tvRequiredForA"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_regular"
-                        android:textSize="14sp" android:textColor="@color/text_secondary"
-                        android:layout_marginBottom="4dp"/>
-                    <TextView android:id="@+id/tvRequiredForB"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_regular"
-                        android:textSize="14sp" android:textColor="@color/text_secondary"
-                        android:layout_marginBottom="4dp"/>
-                    <TextView android:id="@+id/tvRequiredForC"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_regular"
-                        android:textSize="14sp" android:textColor="@color/text_secondary"/>
+                        android:textSize="13sp"
+                        android:textColor="@color/text_hint"
+                        android:layout_marginBottom="12dp"/>
+
+                    <!-- Grade A row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="10dp">
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:cardBackgroundColor="#E8F5E9"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="A"
+                                android:fontFamily="@font/playfair_display_bold"
+                                android:textSize="15sp"
+                                android:textColor="#2D8A4E"
+                                android:gravity="center"/>
+                        </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/tvRequiredForA"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="12dp"
+                            android:fontFamily="@font/inter_regular"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_secondary"/>
+                    </LinearLayout>
+
+                    <!-- Grade B row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="10dp">
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:cardBackgroundColor="#FFF8E1"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="B"
+                                android:fontFamily="@font/playfair_display_bold"
+                                android:textSize="15sp"
+                                android:textColor="#C9A030"
+                                android:gravity="center"/>
+                        </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/tvRequiredForB"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="12dp"
+                            android:fontFamily="@font/inter_regular"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_secondary"/>
+                    </LinearLayout>
+
+                    <!-- Grade C row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            app:cardBackgroundColor="#FDE8E0"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="C"
+                                android:fontFamily="@font/playfair_display_bold"
+                                android:textSize="15sp"
+                                android:textColor="#C04020"
+                                android:gravity="center"/>
+                        </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/tvRequiredForC"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="12dp"
+                            android:fontFamily="@font/inter_regular"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_secondary"/>
+                    </LinearLayout>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

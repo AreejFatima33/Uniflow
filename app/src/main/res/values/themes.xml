@@ -18,11 +18,12 @@
         <item name="colorOnError">@color/white</item>
         <item name="android:colorBackground">@color/cream_bg</item>
         <item name="android:windowBackground">@color/cream_bg</item>
-        <item name="android:statusBarColor">@color/maroon_dark</item>
         <item name="android:navigationBarColor">@color/cream_bg</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:fontFamily">@font/inter_regular</item>
         <item name="bottomNavigationStyle">@style/UniFlowBottomNav</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
     </style>
 
     <style name="Theme.UniFlow" parent="Base.Theme.UniFlow"/>

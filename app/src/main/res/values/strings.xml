@@ -30,4 +30,9 @@
     <string name="_4_0">4.0</string>
     <string name="scan_notes">Scan Notes</string>
     <string name="analyze_handwritten_notes_and_extract_key_information">Analyze handwritten notes and extract key information</string>
+    <string name="voicereminder">VoiceReminder</string>
+    <string name="speak_a_reminder_ai_sets_it_for_you">Speak a reminder, AI sets it for you</string>
+    <string name="tap_the_mic_and_speak_a_reminder_nexample_remind_me_to_submit_assignment_tomorrow_at_3_pm">Tap the mic and speak a reminder.\nExample: Remind me to submit assignment tomorrow at 3 PM</string>
+    <string name="tap_to_speak">Tap to speak</string>
+    <string name="your_reminders">Your Reminders</string>
 </resources>

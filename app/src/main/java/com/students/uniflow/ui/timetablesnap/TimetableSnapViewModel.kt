@@ -2,6 +2,7 @@ package com.students.uniflow.ui.timetablesnap
 
 import android.app.Application
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.*
 import com.students.uniflow.data.model.TimetableEntry
 import com.students.uniflow.data.repository.TimetableRepository
@@ -16,8 +17,10 @@ class TimetableSnapViewModel(app: Application) : AndroidViewModel(app) {
 
     fun processImage(uri: Uri) {
         _uiState.value = TimetableUiState.Loading
+        Log.d("UNIFLOW_DEBUG", "Processing image from: $uri")
         viewModelScope.launch {
             val result = repo.processTimetableImage(uri)
+            Log.d("UNIFLOW_DEBUG", "Repo result: $result")
             _uiState.value = if (result.isSuccess)
                 TimetableUiState.Success(result.getOrThrow())
             else

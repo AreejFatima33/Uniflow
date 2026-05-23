@@ -16,7 +16,7 @@ object GeminiClient {
 
     suspend fun sendPrompt(prompt: String): String {
         if (apiKeys.isEmpty()) {
-            return "Error: No API keys configured"
+            throw Exception("No API keys configured")
         }
 
         for (index in apiKeys.indices) {
@@ -28,25 +28,33 @@ object GeminiClient {
                     apiKey = key
                 )
                 val response = model.generateContent(prompt)
-                val result = response.text ?: "No response from Gemini"
+                val result = response.text ?: throw Exception("Empty response from Gemini")
                 Log.d(TAG, "Key ${index + 1} succeeded")
                 return result
+
             } catch (e: Exception) {
                 val message = e.message ?: ""
-                val isQuotaError = message.contains("quota", ignoreCase = true)
+                val shouldTryNext = message.contains("quota", ignoreCase = true)
                         || message.contains("429")
                         || message.contains("RESOURCE_EXHAUSTED", ignoreCase = true)
                         || message.contains("rate limit", ignoreCase = true)
+                        || message.contains("503")
+                        || message.contains("UNAVAILABLE", ignoreCase = true)
+                        || message.contains("high demand", ignoreCase = true)
+                        || message.contains("try again later", ignoreCase = true)
+                        || message.contains("overloaded", ignoreCase = true)
 
-                if (isQuotaError && index < apiKeys.size - 1) {
-                    Log.w(TAG, "Key ${index + 1} quota exceeded — trying next key")
+                if (shouldTryNext && index < apiKeys.size - 1) {
+                    Log.w(TAG, "Key ${index + 1} unavailable — trying next key")
                     continue
                 }
+
+                // Last key or non-retryable error — throw so callers can handle it
                 Log.e(TAG, "Key ${index + 1} failed: $message")
-                return "Error: $message"
+                throw Exception(message)
             }
         }
 
-        return "Error: All API keys quota exceeded. Please try again in a minute."
+        throw Exception("All API keys unavailable. Please try again in a moment.")
     }
 }

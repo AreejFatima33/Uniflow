@@ -1,98 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="#1A0A0A">
 
+    <!-- Camera preview full screen -->
     <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/cardInstructions"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
+    <!-- Viewfinder overlay -->
+    <FrameLayout
+        android:layout_width="260dp"
+        android:layout_height="320dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="120dp">
+
+        <View android:layout_width="28dp" android:layout_height="3dp"
+            android:layout_gravity="top|start"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="3dp" android:layout_height="28dp"
+            android:layout_gravity="top|start"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="28dp" android:layout_height="3dp"
+            android:layout_gravity="top|end"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="3dp" android:layout_height="28dp"
+            android:layout_gravity="top|end"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="28dp" android:layout_height="3dp"
+            android:layout_gravity="bottom|start"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="3dp" android:layout_height="28dp"
+            android:layout_gravity="bottom|start"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="28dp" android:layout_height="3dp"
+            android:layout_gravity="bottom|end"
+            android:background="@color/text_on_maroon"/>
+        <View android:layout_width="3dp" android:layout_height="28dp"
+            android:layout_gravity="bottom|end"
+            android:background="@color/text_on_maroon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Align exam paper here"
+            android:fontFamily="@font/inter_regular"
+            android:textSize="11sp"
+            android:textColor="#88FFFFFF"
+            android:background="#44000000"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"/>
+    </FrameLayout>
+
+    <!-- Torch button -->
     <ImageButton
         android:id="@+id/btnTorch"
         android:layout_width="44dp"
         android:layout_height="44dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="16dp"
         android:src="@android:drawable/btn_star_big_on"
         android:background="@drawable/bg_profile_chip"
         android:contentDescription="Toggle torch"
-        android:layout_margin="12dp"
-        android:padding="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="10dp"
         app:tint="@color/text_on_maroon"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardInstructions"
-        android:layout_width="0dp"
+    <!-- Bottom control panel -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="4dp"
-        app:cardBackgroundColor="@color/cream_card"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintBottom_toTopOf="@id/tilPaperName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-        <TextView
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:background="#F03D1010"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="24dp">
+
+        <!-- Title row -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/point_camera_at_your_past_exam_paper_and_tap_scan"
-            android:fontFamily="@font/inter_regular"
-            android:textSize="14sp"
-            android:textColor="@color/maroon_primary"
-            android:padding="16dp"
-            android:gravity="center"/>
-    </androidx.cardview.widget.CardView>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="14dp">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+            <LinearLayout
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_mic_ring_inner"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_nav_scan"
+                    android:contentDescription="@null"/>
+            </LinearLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilPaperName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/subject_name_e_g_physics_math"
-        style="@style/UniFlow.TextInput"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@id/btnCapture"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPaperName"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ExamOracle"
+                    android:fontFamily="@font/playfair_display_bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/text_on_maroon"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Point at your past exam paper"
+                    android:fontFamily="@font/inter_regular"
+                    android:textSize="12sp"
+                    android:textColor="#CCF5F0EB"/>
+            </LinearLayout>
+
+            <!-- Papers scanned counter -->
+            <LinearLayout
+                android:id="@+id/layoutPaperCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/bg_mic_ring_inner"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvPaperCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:fontFamily="@font/playfair_display_bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_on_maroon"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="scanned"
+                    android:fontFamily="@font/inter_regular"
+                    android:textSize="9sp"
+                    android:textColor="#CCF5F0EB"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Subject name input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPaperName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:fontFamily="@font/inter_regular"
-            android:maxLines="1"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:hint="Subject name (e.g. Data Structures)"
+            android:layout_marginBottom="12dp"
+            style="@style/UniFlow.TextInput">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPaperName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:fontFamily="@font/inter_regular"
+                android:maxLines="1"
+                android:textColor="@color/text_on_maroon"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCapture"
-        android:layout_width="wrap_content"
+        <!-- Progress bar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            android:indeterminateTint="@color/text_on_maroon"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Button row -->
+    <!-- Button row — 3 buttons: Scan / Add Another / Analyze -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/scan_exam_paper"
-        android:fontFamily="@font/inter_medium"
-        android:textSize="16sp"
-        android:paddingHorizontal="32dp"
-        android:paddingVertical="14dp"
-        android:layout_marginBottom="24dp"
-        style="@style/UniFlow.Button.Primary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Row 1: Scan + Add Another (side by side) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <!-- Scan Paper — always visible initially, hidden after first scan -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCapture"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Scan Paper"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="15sp"
+                android:textColor="@color/maroon_dark"
+                app:backgroundTint="@color/text_on_maroon"
+                app:cornerRadius="26dp"
+                app:elevation="0dp"/>
+        </LinearLayout>
+
+        <!-- Row 2: Add Another + Analyze (hidden until first paper scanned) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Add Another Paper -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddPaper"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:text="📷 Scan Another"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="13sp"
+                android:textColor="@color/text_on_maroon"
+                android:layout_marginEnd="10dp"
+                android:visibility="gone"
+                app:backgroundTint="#665A1818"
+                app:cornerRadius="26dp"
+                app:elevation="0dp"
+                app:strokeColor="@color/text_on_maroon"
+                app:strokeWidth="1dp"/>
+
+            <!-- Analyze All Papers -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAnalyze"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:text="Analyze"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="13sp"
+                android:textColor="@color/maroon_dark"
+                android:visibility="gone"
+                app:backgroundTint="@color/text_on_maroon"
+                app:cornerRadius="26dp"
+                app:elevation="0dp"/>
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

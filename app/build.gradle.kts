@@ -82,6 +82,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.intuit.sdp)
+    implementation(libs.intuit.ssp)
     implementation(libs.transport.api)
     ksp(libs.androidx.room.compiler)
     implementation(libs.text.recognition)

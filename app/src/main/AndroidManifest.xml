@@ -25,7 +25,8 @@
         android:roundIcon="@drawable/uniflowlogo"
         android:supportsRtl="true"
         android:navigationBarColor="@color/cream_card"
-        android:theme="@style/Theme.UniFlow">
+        android:theme="@style/Theme.UniFlow"
+        android:enableOnBackInvokedCallback="true">
 
         <!-- Receivers -->
         <receiver

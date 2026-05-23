@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.Lifecycle
+import com.students.uniflow.R
 import com.students.uniflow.databinding.FragmentGradePredictorBinding
 import kotlinx.coroutines.launch
 
@@ -28,6 +29,23 @@ class GradePredictorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Status bar insets fix
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+            val statusBarHeight = insets.getInsets(
+                androidx.core.view.WindowInsetsCompat.Type.statusBars()
+            ).top
+            view.findViewById<android.widget.FrameLayout>(R.id.header_frame)
+                ?.setPadding(0, statusBarHeight, 0, 0)
+            insets
+        }
+
+// Back chevron
+        view.post {
+            view.findViewById<android.view.View>(R.id.btn_back)?.setOnClickListener {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+        }
 
         binding.btnCalculate.setOnClickListener {
             val subject = binding.etSubject.text.toString().trim().ifBlank { "Subject" }
@@ -66,6 +84,11 @@ class GradePredictorFragment : Fragment() {
                         is GradePredictorUiState.Success -> {
                             binding.progressBar.visibility = View.GONE
                             binding.resultCard.visibility = View.VISIBLE
+
+                                viewLifecycleOwner.lifecycleScope.launch {
+                                    com.students.uniflow.data.repository.BurnoutRepository(requireContext())
+                                        .logStudySession("GradePredictor", 10)
+                                }
 
                             val r = state.result
                             binding.tvCurrentGrade.text = r.grade

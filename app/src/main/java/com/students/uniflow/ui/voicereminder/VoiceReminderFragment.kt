@@ -23,9 +23,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButton
+import com.students.uniflow.R
 import com.students.uniflow.data.local.AppDatabase
 import com.students.uniflow.data.local.entity.ReminderEntity
-import com.students.uniflow.data.model.ReminderResult
 import com.students.uniflow.databinding.FragmentVoiceReminderBinding
 import com.students.uniflow.utils.AlarmHelper
 import com.students.uniflow.utils.SpeechHelper
@@ -38,7 +38,6 @@ class VoiceReminderFragment : Fragment() {
     private val viewModel: VoiceReminderViewModel by viewModels()
     private var speechRecognizer: SpeechRecognizer? = null
 
-    // Stores reminder entities so we can delete/edit by id
     private val remindersEntityList = mutableListOf<ReminderEntity>()
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -57,6 +56,23 @@ class VoiceReminderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Back chevron — post ensures view is fully laid out before registering
+        view.post {
+            view.findViewById<android.view.View>(R.id.btn_back)?.setOnClickListener {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+        }
+
+        // Status bar insets fix
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+            val statusBarHeight = insets.getInsets(
+                androidx.core.view.WindowInsetsCompat.Type.statusBars()
+            ).top
+            view.findViewById<android.widget.FrameLayout>(R.id.header_frame)
+                ?.setPadding(0, statusBarHeight, 0, 0)
+            insets
+        }
 
         loadSavedReminders()
 
@@ -77,12 +93,12 @@ class VoiceReminderFragment : Fragment() {
                         is VoiceReminderUiState.Idle -> {
                             binding.progressBar.visibility = View.GONE
                             binding.tvStatus.text = ""
-                            binding.btnMic.text = "Tap to Speak"
+                            binding.btnMic.contentDescription = "Tap to Speak"
                             binding.btnMic.isEnabled = true
                         }
                         is VoiceReminderUiState.Listening -> {
-                            binding.tvStatus.text = "🎙️ Listening..."
-                            binding.btnMic.text = "Listening..."
+                            binding.tvStatus.text = "Listening..."
+                            binding.btnMic.contentDescription = "Listening..."
                             binding.btnMic.isEnabled = false
                         }
                         is VoiceReminderUiState.Processing -> {
@@ -92,16 +108,21 @@ class VoiceReminderFragment : Fragment() {
                         is VoiceReminderUiState.Success -> {
                             binding.progressBar.visibility = View.GONE
                             binding.tvStatus.text = ""
-                            binding.btnMic.text = "Tap to Speak"
+                            binding.btnMic.contentDescription = "Tap to Speak"
                             binding.btnMic.isEnabled = true
-                            // Reload from DB to get the new entity with its real id
+                            // ADD THIS ↓
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                com.students.uniflow.data.repository.BurnoutRepository(requireContext())
+                                    .logStudySession("VoiceReminder", 5)
+                            }
+
                             loadSavedReminders()
                             viewModel.resetState()
                         }
                         is VoiceReminderUiState.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.tvStatus.text = ""
-                            binding.btnMic.text = "Tap to Speak"
+                            binding.btnMic.contentDescription = "Tap to Speak"
                             binding.btnMic.isEnabled = true
                             Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG).show()
                             viewModel.resetState()
@@ -109,6 +130,19 @@ class VoiceReminderFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    // Convert 24-hour "HH:mm" to 12-hour "h:mm AM/PM"
+    private fun formatTo12Hour(time24: String): String {
+        return try {
+            val t = java.time.LocalTime.parse(
+                time24,
+                java.time.format.DateTimeFormatter.ofPattern("HH:mm")
+            )
+            t.format(java.time.format.DateTimeFormatter.ofPattern("h:mm a"))
+        } catch (e: Exception) {
+            time24
         }
     }
 
@@ -136,59 +170,107 @@ class VoiceReminderFragment : Fragment() {
         binding.remindersContainer.removeAllViews()
 
         remindersEntityList.forEachIndexed { index, entity ->
+
             val card = com.google.android.material.card.MaterialCardView(requireContext()).apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
-                ).also { it.bottomMargin = 16 }
-                radius = 12f
-                cardElevation = 4f
+                ).also { it.bottomMargin = 12 }
+                radius = 46f
+                cardElevation = 2f
+                strokeWidth = 2
+                setCardBackgroundColor(android.graphics.Color.parseColor("#FDFAF7"))
+                strokeColor = android.graphics.Color.parseColor("#EDD8D4")
             }
 
             val inner = LinearLayout(requireContext()).apply {
                 orientation = LinearLayout.VERTICAL
-                setPadding(40, 30, 40, 30)
+                setPadding(44, 36, 44, 36)
             }
 
+            // Number pill
             val tvNumber = TextView(requireContext()).apply {
-                text = "Reminder ${index + 1}"
-                textSize = 12f
-                setTextColor(android.graphics.Color.GRAY)
-            }
-
-            val tvTask = TextView(requireContext()).apply {
-                text = "📌 ${entity.task}"
-                textSize = 16f
-                setTypeface(null, android.graphics.Typeface.BOLD)
-                setPadding(0, 8, 0, 4)
-            }
-
-            val tvDateTime = TextView(requireContext()).apply {
-                text = "🗓 ${entity.date}  ⏰ ${entity.time}"
-                textSize = 14f
-            }
-
-            // Button row
-            val btnRow = LinearLayout(requireContext()).apply {
-                orientation = LinearLayout.HORIZONTAL
-                setPadding(0, 16, 0, 0)
-            }
-
-            val btnDelete = MaterialButton(requireContext(),null,
-                com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                text = "Delete"
-                textSize = 12f
+                text = "REMINDER ${index + 1}"
+                textSize = 9f
+                typeface = resources.getFont(R.font.inter_medium)
+                setTextColor(android.graphics.Color.parseColor("#B06060"))
+                background = android.graphics.drawable.GradientDrawable().apply {
+                    setColor(android.graphics.Color.parseColor("#FDE8E0"))
+                    cornerRadius = 20f
+                }
+                setPadding(20, 8, 20, 8)
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
-                ).also { it.marginEnd = 16 }
+                ).also { it.bottomMargin = 10 }
+            }
+
+            val tvTask = TextView(requireContext()).apply {
+                text = entity.task
+                textSize = 15f
+                typeface = resources.getFont(R.font.playfair_display_bold)
+                setTextColor(android.graphics.Color.parseColor("#2A1010"))
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).also { it.bottomMargin = 8 }
+            }
+
+            // Format time as 12-hour before displaying
+            val displayTime = formatTo12Hour(entity.time)
+
+            val tvDateTime = TextView(requireContext()).apply {
+                text = "📅  ${entity.date}    ⏰  $displayTime"
+                textSize = 12f
+                typeface = resources.getFont(R.font.inter_medium)
+                setTextColor(android.graphics.Color.parseColor("#7A5050"))
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).also { it.bottomMargin = 14 }
+            }
+
+            // Divider
+            val divider = View(requireContext()).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 1
+                ).also { it.bottomMargin = 14 }
+                setBackgroundColor(android.graphics.Color.parseColor("#EDD8D4"))
+            }
+
+            val btnRow = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.HORIZONTAL
+            }
+
+            val btnDelete = MaterialButton(
+                requireContext(), null,
+                com.google.android.material.R.attr.materialButtonOutlinedStyle
+            ).apply {
+                text = "Delete"
+                textSize = 12f
+                typeface = resources.getFont(R.font.inter_medium)
+                setTextColor(android.graphics.Color.parseColor("#C04020"))
+                strokeColor = android.content.res.ColorStateList.valueOf(
+                    android.graphics.Color.parseColor("#EDD8D4")
+                )
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).also { it.marginEnd = 12 }
                 setOnClickListener { confirmDelete(entity) }
             }
 
-            val btnEdit = MaterialButton(requireContext(), null,
-                com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
+            val btnEdit = MaterialButton(
+                requireContext(), null,
+                com.google.android.material.R.attr.materialButtonOutlinedStyle
+            ).apply {
                 text = "Edit Time"
                 textSize = 12f
+                typeface = resources.getFont(R.font.inter_medium)
+                setTextColor(android.graphics.Color.parseColor("#3D1010"))
+                strokeColor = android.content.res.ColorStateList.valueOf(
+                    android.graphics.Color.parseColor("#C8A8A0")
+                )
                 setOnClickListener { showEditDialog(entity) }
             }
 
@@ -198,6 +280,7 @@ class VoiceReminderFragment : Fragment() {
             inner.addView(tvNumber)
             inner.addView(tvTask)
             inner.addView(tvDateTime)
+            inner.addView(divider)
             inner.addView(btnRow)
             card.addView(inner)
             binding.remindersContainer.addView(card)
@@ -208,9 +291,7 @@ class VoiceReminderFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setTitle("Delete Reminder")
             .setMessage("Delete reminder \"${entity.task}\"?")
-            .setPositiveButton("Delete") { _, _ ->
-                deleteReminder(entity)
-            }
+            .setPositiveButton("Delete") { _, _ -> deleteReminder(entity) }
             .setNegativeButton("Cancel", null)
             .show()
     }
@@ -218,14 +299,11 @@ class VoiceReminderFragment : Fragment() {
     private fun deleteReminder(entity: ReminderEntity) {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                // Cancel the alarm in AlarmManager
                 val intent = Intent(requireContext(), com.students.uniflow.utils.AlarmReceiver::class.java).apply {
                     action = "com.students.uniflow.ALARM_${entity.id}"
                 }
                 val pendingIntent = PendingIntent.getBroadcast(
-                    requireContext(),
-                    entity.id,
-                    intent,
+                    requireContext(), entity.id, intent,
                     PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
                 )
                 if (pendingIntent != null) {
@@ -233,10 +311,7 @@ class VoiceReminderFragment : Fragment() {
                     alarmManager.cancel(pendingIntent)
                     pendingIntent.cancel()
                 }
-
-                // Delete from DB
                 AppDatabase.getInstance(requireContext()).reminderDao().deleteById(entity.id)
-
                 Toast.makeText(requireContext(), "Reminder deleted", Toast.LENGTH_SHORT).show()
                 loadSavedReminders()
             } catch (e: Exception) {
@@ -246,36 +321,77 @@ class VoiceReminderFragment : Fragment() {
     }
 
     private fun showEditDialog(entity: ReminderEntity) {
+        val dialogLayout = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(60, 20, 60, 0)
+        }
+
+        val taskLabel = TextView(requireContext()).apply {
+            text = "Task name"
+            textSize = 12f
+            setTextColor(android.graphics.Color.parseColor("#7A5050"))
+            setPadding(0, 0, 0, 6)
+        }
+
+        val taskInput = android.widget.EditText(requireContext()).apply {
+            hint = "Task name"
+            setText(entity.task)
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or
+                    android.text.InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).also { it.bottomMargin = 20 }
+        }
+
+        val timeLabel = TextView(requireContext()).apply {
+            text = "Time (HH:mm  e.g. 14:30)"
+            textSize = 12f
+            setTextColor(android.graphics.Color.parseColor("#7A5050"))
+            setPadding(0, 0, 0, 6)
+        }
+
         val timeInput = android.widget.EditText(requireContext()).apply {
-            hint = "New time (e.g. 14:30)"
+            hint = "HH:mm"
             setText(entity.time)
             inputType = android.text.InputType.TYPE_CLASS_TEXT
         }
 
+        dialogLayout.addView(taskLabel)
+        dialogLayout.addView(taskInput)
+        dialogLayout.addView(timeLabel)
+        dialogLayout.addView(timeInput)
+
         AlertDialog.Builder(requireContext())
-            .setTitle("Edit Reminder Time")
-            .setMessage("Task: ${entity.task}\nDate: ${entity.date}\n\nEnter new time (HH:mm):")
-            .setView(timeInput)
+            .setTitle("Edit Reminder")
+            .setView(dialogLayout)
             .setPositiveButton("Save") { _, _ ->
+                val newTask = taskInput.text.toString().trim()
                 val newTime = timeInput.text.toString().trim()
-                if (newTime.matches(Regex("\\d{2}:\\d{2}"))) {
-                    updateReminder(entity, newTime)
-                } else {
-                    Toast.makeText(requireContext(), "Invalid time format. Use HH:mm (e.g. 14:30)", Toast.LENGTH_LONG).show()
+                when {
+                    newTask.isEmpty() ->
+                        Toast.makeText(requireContext(), "Task name cannot be empty", Toast.LENGTH_LONG).show()
+                    !newTime.matches(Regex("\\d{2}:\\d{2}")) ->
+                        Toast.makeText(requireContext(), "Invalid time format. Use HH:mm (e.g. 14:30)", Toast.LENGTH_LONG).show()
+                    else ->
+                        updateReminder(entity, newTask, newTime)
                 }
             }
             .setNegativeButton("Cancel", null)
             .show()
     }
 
-    private fun updateReminder(entity: ReminderEntity, newTime: String) {
+    private fun updateReminder(entity: ReminderEntity, newTask: String, newTime: String) {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                // Calculate new trigger time
-                val date = java.time.LocalDate.parse(entity.date,
-                    java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                val time = java.time.LocalTime.parse(newTime,
-                    java.time.format.DateTimeFormatter.ofPattern("HH:mm"))
+                val date = java.time.LocalDate.parse(
+                    entity.date,
+                    java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                )
+                val time = java.time.LocalTime.parse(
+                    newTime,
+                    java.time.format.DateTimeFormatter.ofPattern("HH:mm")
+                )
                 val newTriggerMillis = java.time.LocalDateTime.of(date, time)
                     .atZone(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli()
 
@@ -297,23 +413,28 @@ class VoiceReminderFragment : Fragment() {
                     alarmManager.cancel(oldPending)
                 }
 
-                // Delete old, insert updated record
+                // Delete old, insert updated with new task name + time
                 val db = AppDatabase.getInstance(requireContext())
                 db.reminderDao().deleteById(entity.id)
                 db.reminderDao().insertReminder(
                     ReminderEntity(
-                        task = entity.task,
+                        task = newTask,
                         date = entity.date,
                         time = newTime,
                         triggerAtMillis = newTriggerMillis
                     )
                 )
 
-                // Schedule new alarm
-                AlarmHelper.scheduleOneTimeReminder(requireContext(), entity.task, newTriggerMillis)
+                AlarmHelper.scheduleOneTimeReminder(requireContext(), newTask, newTriggerMillis)
 
-                Toast.makeText(requireContext(), "Reminder updated to $newTime", Toast.LENGTH_SHORT).show()
+                val display12 = formatTo12Hour(newTime)
+                Toast.makeText(
+                    requireContext(),
+                    "Reminder updated to $display12",
+                    Toast.LENGTH_SHORT
+                ).show()
                 loadSavedReminders()
+
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "Failed to update: ${e.message}", Toast.LENGTH_LONG).show()
             }

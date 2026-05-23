@@ -1,12 +1,9 @@
 package com.students.uniflow.ui.deadlinegenie
 
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.students.uniflow.R
@@ -22,79 +19,125 @@ class StudyPlanFragment : Fragment(R.layout.fragment_study_plan) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStudyPlanBinding.bind(view)
 
-        // Read study plan from Bundle
+        // Status bar insets
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(view) { _, insets ->
+            val statusBarHeight = insets.getInsets(
+                androidx.core.view.WindowInsetsCompat.Type.statusBars()
+            ).top
+            view.findViewById<android.widget.FrameLayout>(R.id.header_frame)
+                ?.setPadding(0, statusBarHeight, 0, 0)
+            insets
+        }
+
+        // Back chevron
+        view.post {
+            view.findViewById<android.view.View>(R.id.btn_back)?.setOnClickListener {
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+        }
+
         val json = arguments?.getString("study_plan_json") ?: return
         val plan = Gson().fromJson(json, StudyPlanResult::class.java) ?: return
 
-        binding.tvPlanTitle.text = "📅 ${plan.planTitle}"
-        binding.tvTotalDays.text = "Total: ${plan.totalDays} days of study"
+        binding.tvPlanTitle.text = plan.planTitle
+        binding.tvTotalDays.text = "${plan.totalDays} days of focused study"
 
-        // Build a card for each day
         plan.dailyPlan.forEach { dayPlan ->
-            val card = buildDayCard(dayPlan.day, dayPlan.date, dayPlan.topic, dayPlan.tasks)
-            binding.containerPlan.addView(card)
+            buildDayCard(dayPlan.day, dayPlan.date, dayPlan.topic, dayPlan.tasks)
         }
     }
 
-    private fun buildDayCard(
-        dayNumber: Int,
-        date: String,
-        topic: String,
-        tasks: List<String>
-    ): CardView {
-        val context = requireContext()
+    private fun buildDayCard(dayNumber: Int, date: String, topic: String, tasks: List<String>) {
+        val ctx = requireContext()
 
-        // Alternate card colors
-        val bgColor = if (dayNumber % 2 == 0)
-            Color.parseColor("#E3F2FD")   // light blue
-        else
-            Color.parseColor("#F3E5F5")   // light purple
-
-        val card = CardView(context).apply {
-            radius = 16f
-            cardElevation = 4f
-            setCardBackgroundColor(bgColor)
-            val params = LinearLayout.LayoutParams(
+        val card = com.google.android.material.card.MaterialCardView(ctx).apply {
+            layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            params.setMargins(0, 0, 0, 16)
-            layoutParams = params
+            ).also { it.bottomMargin = 12 }
+            radius = 46f
+            cardElevation = 2f
+            strokeWidth = 2
+            setCardBackgroundColor(android.graphics.Color.parseColor("#FDFAF7"))
+            strokeColor = android.graphics.Color.parseColor("#EDD8D4")
         }
 
-        val inner = LinearLayout(context).apply {
+        val inner = LinearLayout(ctx).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(32, 24, 32, 24)
+            setPadding(44, 36, 44, 36)
         }
 
-        // Day header
-        inner.addView(TextView(context).apply {
-            text = "Day $dayNumber — $date"
-            textSize = 15f
-            setTypeface(null, Typeface.BOLD)
-            setTextColor(Color.parseColor("#1A237E"))
-        })
+        // Day number pill
+        val tvPill = TextView(ctx).apply {
+            text = "DAY $dayNumber"
+            textSize = 9f
+            typeface = resources.getFont(R.font.inter_medium)
+            setTextColor(android.graphics.Color.parseColor("#B06060"))
+            background = android.graphics.drawable.GradientDrawable().apply {
+                setColor(android.graphics.Color.parseColor("#FDE8E0"))
+                cornerRadius = 20f
+            }
+            setPadding(20, 8, 20, 8)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).also { it.bottomMargin = 10 }
+        }
+
+        // Date
+        val tvDate = TextView(ctx).apply {
+            text = "📅  $date"
+            textSize = 12f
+            typeface = resources.getFont(R.font.inter_medium)
+            setTextColor(android.graphics.Color.parseColor("#7A5050"))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).also { it.bottomMargin = 8 }
+        }
 
         // Topic
-        inner.addView(TextView(context).apply {
-            text = "📖 $topic"
-            textSize = 14f
-            setTextColor(Color.parseColor("#333333"))
-            setPadding(0, 8, 0, 8)
-        })
+        val tvTopic = TextView(ctx).apply {
+            text = topic
+            textSize = 15f
+            typeface = resources.getFont(R.font.playfair_display_bold)
+            setTextColor(android.graphics.Color.parseColor("#2A1010"))
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).also { it.bottomMargin = 12 }
+        }
+
+        // Divider
+        val divider = View(ctx).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 1
+            ).also { it.bottomMargin = 12 }
+            setBackgroundColor(android.graphics.Color.parseColor("#EDD8D4"))
+        }
+
+        inner.addView(tvPill)
+        inner.addView(tvDate)
+        inner.addView(tvTopic)
+        inner.addView(divider)
 
         // Tasks
         tasks.forEach { task ->
-            inner.addView(TextView(context).apply {
-                text = "✅ $task"
+            val tvTask = TextView(ctx).apply {
+                text = "✓  $task"
                 textSize = 13f
-                setTextColor(Color.parseColor("#555555"))
-                setPadding(8, 2, 0, 2)
-            })
+                typeface = resources.getFont(R.font.inter_regular)
+                setTextColor(android.graphics.Color.parseColor("#5A3A3A"))
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).also { it.bottomMargin = 6 }
+            }
+            inner.addView(tvTask)
         }
 
         card.addView(inner)
-        return card
+        binding.containerPlan.addView(card)
     }
 
     override fun onDestroyView() {

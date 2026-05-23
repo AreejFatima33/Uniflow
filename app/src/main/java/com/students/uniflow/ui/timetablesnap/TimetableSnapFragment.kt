@@ -1,8 +1,13 @@
 package com.students.uniflow.ui.timetablesnap
 
 import android.Manifest
+import android.app.AlarmManager
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.*
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,9 +15,11 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.students.uniflow.R
 import com.students.uniflow.utils.CameraHelper
+import kotlinx.coroutines.launch
 
 class TimetableSnapFragment : Fragment() {
 
@@ -26,7 +33,12 @@ class TimetableSnapFragment : Fragment() {
 
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            if (granted) startCamera() else tvStatus.text = "Camera permission denied"
+            if (granted) {
+                // Camera granted, now ensure exact alarm constraints are met
+                checkExactAlarmPermissionAndStartCamera()
+            } else {
+                tvStatus.text = "Camera permission denied"
+            }
         }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -40,6 +52,7 @@ class TimetableSnapFragment : Fragment() {
         progressBar  = view.findViewById(R.id.progress_bar)
         tvStatus     = view.findViewById(R.id.tv_status)
 
+        // Initial security framework check
         checkCameraPermission()
 
         btnCapture.setOnClickListener {
@@ -74,8 +87,18 @@ class TimetableSnapFragment : Fragment() {
                     val gson = com.google.gson.Gson()
                     val json = gson.toJson(state.entries)
                     val bundle = Bundle().apply { putString("timetable_json", json) }
-                    findNavController().navigate(R.id.action_timetableSnap_to_timetableDisplay, bundle)
+
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        com.students.uniflow.data.repository.BurnoutRepository(requireContext())
+                            .logStudySession("TimetableSnap", 10)
+                    }
+
+                    val navOptions = androidx.navigation.NavOptions.Builder()
+                        .setPopUpTo(R.id.nav_timetable, true)
+                        .build()
+                    findNavController().navigate(R.id.action_timetableSnap_to_timetableDisplay, bundle, navOptions)
                 }
+
                 is TimetableUiState.Error -> {
                     progressBar.visibility = View.GONE
                     btnCapture.isEnabled = true
@@ -88,10 +111,36 @@ class TimetableSnapFragment : Fragment() {
     private fun checkCameraPermission() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             == PackageManager.PERMISSION_GRANTED) {
-            startCamera()
+            // Camera check pass -> forward execution stream to Exact Alarm verification
+            checkExactAlarmPermissionAndStartCamera()
         } else {
             requestPermission.launch(Manifest.permission.CAMERA)
         }
+    }
+
+    /**
+    // ADDED METHOD
+     * Verifies system API level constraints for exact scheduling mechanisms.
+     * Fires intent navigation to system settings if authorization parameters are absent.
+     */
+    private fun checkExactAlarmPermissionAndStartCamera() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (!alarmManager.canScheduleExactAlarms()) {
+                tvStatus.text = "Please enable Exact Alarms to allow class reminders."
+
+                // EXPLICIT INTENT INJECTION FOR SYSTEM LEVEL SETTINGS
+                val intent = Intent().apply {
+                    action = Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
+                    data = android.net.Uri.fromParts("package", requireContext().packageName, null)
+                }
+                startActivity(intent)
+                return // Halt execution flow; camera tracking shouldn't activate until background tasks can safely register
+            }
+        }
+
+        // Fallthrough if API level < 31 or if permission is already authorized
+        startCamera()
     }
 
     private fun startCamera() {
@@ -103,7 +152,9 @@ class TimetableSnapFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        cameraHelper.turnOffTorch()
+        if (::cameraHelper.isInitialized) {
+            cameraHelper.turnOffTorch()
+        }
         super.onDestroyView()
     }
 }

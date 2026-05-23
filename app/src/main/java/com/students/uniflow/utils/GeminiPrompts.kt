@@ -39,51 +39,81 @@ object GeminiPrompts {
     """.trimIndent()
 
     fun timetableSnap(extractedText: String): String = """
-        You are a timetable data extractor. Your ONLY job is to read the text below
-        and extract class schedule entries.
+    You are an expert at parsing university timetable data from OCR text.
+    The text below was extracted from a printed weekly timetable table using OCR.
+    OCR often reads table cells in wrong order — your job is to reconstruct the correct schedule.
 
-        CRITICAL RULES:
-        - Return ONLY a raw JSON array — no markdown, no backticks, no explanation
-        - Extract ONLY what is actually written in the text — do NOT invent data
-        - Each entry needs: day, time, subject, room, professor
-        - For missing fields: use empty string ""
-        - If the text has NO timetable data at all: return exactly []
+    CRITICAL RULES:
+    - Return ONLY a raw JSON array — no markdown, no backticks, no explanation
+    - The timetable has days as ROWS (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
+    - The timetable has TIME SLOTS as COLUMNS (e.g. 2:30-3:10, 3:10-3:20, 3:20-4:00, 4:00-4:40)
+    - Each cell contains: Subject Name + Professor name (in brackets like "Sir X" or "Ma'am X")
+    - "Break" cells are real entries — include them with subject = "Break", professor = ""
+    - "OFF" cells mean no class — SKIP them entirely, do not include in output
+    - Empty cells mean no class — SKIP them
+    - If a subject name is split across multiple OCR lines, reconstruct the full name
+    - Professor names appear in brackets () — extract them carefully
+    - The time slots apply to ALL days equally — use the time slots you find in the text
+    - For missing fields use empty string ""
+    - If NO data found, return exactly []
+    - Do NOT duplicate entries
+    - Do NOT invent data not present in the text
 
-        Example output:
-        [{"day":"Monday","time":"08:00 AM","subject":"Math","room":"101","professor":"Sir Ahmed"}]
+    // Change your structural example inside fun timetableSnap to this:
+JSON structure — each object must have EXACTLY these keys (Ensure 'time' uses explicit AM/PM format, e.g., "02:30 PM-03:10 PM"):
+[
+  {
+    "day": "Monday",
+    "time": "02:30 PM-03:10 PM",
+    "subject": "Information Security",
+    "room": "",
+    "professor": "Sir Tahir"
+  }
+    ]
 
-        Timetable text to extract from:
-        ---
-        $extractedText
-        ---
-    """.trimIndent()
+    RECONSTRUCTION STRATEGY:
+    1. First identify all time slots mentioned (e.g. 2:30-3:10, 3:10-3:20, 3:20-4:00, 4:00-4:40)
+    2. Then identify each day name (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
+    3. For each day, find the subjects and professors that belong to each time slot
+    4. Subject names that are split across multiple lines — join them into one complete name
+    5. "Computer Organization and Assembly Language" is ONE subject — do not split it
+
+    OCR text to reconstruct from:
+    ---
+    $extractedText
+    ---
+""".trimIndent()
 
     // --- WEEK 4 ---
 
     fun examOracle(extractedText: String, paperName: String = ""): String {
         val subjectLine = if (paperName.isNotBlank()) "Subject: $paperName\n" else ""
         return """
-        You are an expert exam analyst. Analyze this past exam paper and predict the most likely topics.
-        ${subjectLine}
-        Exam paper text:
-        $extractedText
-        
         You are an expert exam analyst. A student has provided text from their past examination papers.
         Analyze the content carefully and identify which topics appear most frequently.
 
+        $subjectLine
+
         CRITICAL RULES:
-        - If the text is garbled or partially unreadable (OCR errors), do your BEST to extract meaning from partial words
-        - If text appears to be in Urdu script but shows as garbled characters, note that Urdu content was detected
-        - The text may be in English OR Urdu — process both languages equally
-        - If the text is in Urdu, respond with topics and questions in Urdu as well
         - Return ONLY a raw JSON object — no markdown, no backticks, no explanation
         - Base your analysis ONLY on the text provided below — do NOT invent topics
-        - Identify exactly 5 predicted topics (or fewer if there are not enough topics in the text)
-        - For each topic, assign a probability: "High", "Medium", or "Low"
+        - If the text is garbled or partially unreadable (OCR errors), do your BEST to extract meaning
+        - The text may be in English OR Urdu — process both languages equally
+        - If the text is in Urdu, respond with topics and questions in Urdu as well
+        - Identify exactly 5 predicted topics (or fewer if not enough content exists)
         - For each topic, generate exactly 3 practice questions based on the text
-        - probability = "High" means the topic appears 3+ times in the papers
-        - probability = "Medium" means it appears 2 times
-        - probability = "Low" means it appears once but is important
+
+        PROBABILITY ASSIGNMENT — follow these rules strictly:
+        - You MUST return a MIX of High, Medium, and Low — NEVER assign the same probability to all topics
+        - First rank all topics by how frequently they appear across the paper(s)
+        - Topic ranked 1st (most frequent) → "High"
+        - Topic ranked 2nd → "High"
+        - Topic ranked 3rd → "Medium"
+        - Topic ranked 4th → "Medium"
+        - Topic ranked 5th (least frequent) → "Low"
+        - If only 3 topics exist: 1st = "High", 2nd = "Medium", 3rd = "Low"
+        - If only 4 topics exist: 1st = "High", 2nd = "High", 3rd = "Medium", 4th = "Low"
+        - NEVER return all "High" — this is strictly forbidden
 
         Return this exact JSON structure:
         {

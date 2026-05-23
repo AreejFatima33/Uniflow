@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cream_bg">
+    android:background="@color/cream_bg"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,117 +12,384 @@
         android:orientation="vertical">
 
         <!-- Header -->
-        <FrameLayout android:layout_width="match_parent" android:layout_height="160dp">
-            <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
-                android:src="@drawable/bg_wavy_header" android:scaleType="fitXY"/>
-            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                android:gravity="center_vertical" android:paddingHorizontal="20dp" android:layout_marginBottom="34sp">
+        <FrameLayout
+            android:id="@+id/header_frame"
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/bg_wavy_header"
+                android:scaleType="fitXY"
+                android:contentDescription="@null"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="24dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="44dp">
+
+                <!-- Back chevron -->
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="12dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_chevron_back"
+                    android:background="@drawable/bg_profile_chip"
+                    android:contentDescription="Back"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginBottom="23dp"
+                    android:elevation="6dp"/>
+
+                <!-- Title block -->
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="23dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="BurnoutRadar"
                         android:fontFamily="@font/playfair_display_bold"
-                        android:text="🔥 BurnoutRadar"
+                        android:textSize="28sp"
                         android:textColor="@color/text_on_maroon"
-                        android:textSize="22sp" />
+                        android:layout_marginBottom="4dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_regular"
-                        android:text="Analyzes your 7-day study patterns to detect burnout risk."
-                        android:textColor="#CCF5F0EB"
-                        android:textSize="12sp" />
+                        android:text="Your 7-day study wellness check"
+                        android:fontFamily="@font/inter_medium"
+                        android:textSize="12sp"
+                        android:textColor="#CCF5F0EB"/>
+                </LinearLayout>
+
+                <!-- Badge icon -->
+                <LinearLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_mic_ring_inner"
+                    android:gravity="center"
+                    android:layout_marginBottom="23dp">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_flame"
+                        android:contentDescription="@null"/>
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" android:padding="20dp">
+        <!-- How it works info card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/cream_card"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/border_light"
+            app:strokeWidth="1dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_analyze_burnout"
-                android:layout_width="match_parent" android:layout_height="56dp"
-                android:text="Analyze My Study Pattern"
-                android:fontFamily="@font/inter_medium" android:textSize="16sp"
-                style="@style/UniFlow.Button.Primary"
-                android:layout_marginBottom="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <ProgressBar android:id="@+id/progress_burnout"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" android:visibility="gone"
-                android:layout_marginBottom="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="How BurnoutRadar Works"
+                    android:fontFamily="@font/playfair_display_bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="10dp"/>
 
-            <TextView android:id="@+id/tv_burnout_idle"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:text="Tap the button above to check your burnout risk based on your study activity this week."
-                android:fontFamily="@font/inter_regular"
-                android:textSize="14sp" android:textColor="@color/text_hint"
-                android:gravity="center" android:padding="20dp" android:visibility="visible"/>
+                <!-- Stat row 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
 
-            <TextView android:id="@+id/tv_burnout_error"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_regular"
-                android:textSize="14sp" android:textColor="@color/error_red"
-                android:visibility="gone" android:padding="12dp"/>
+                    <LinearLayout
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_mic_ring_inner"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📊"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/layout_burnout_result"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:cardBackgroundColor="@color/cream_card"
-                app:cardCornerRadius="16dp" app:cardElevation="2dp"
-                app:strokeColor="@color/border_light" app:strokeWidth="1dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:padding="20dp">
-
-                    <TextView android:id="@+id/tv_risk_level"
-                        android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:fontFamily="@font/playfair_display_bold"
-                        android:textSize="22sp" android:layout_marginBottom="16dp"/>
-
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="📊 Analysis" android:fontFamily="@font/inter_medium"
-                        android:textSize="15sp" android:textColor="@color/text_primary"
-                        android:layout_marginBottom="6dp"/>
-
-                    <TextView android:id="@+id/tv_burnout_summary"
-                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:text="Tracks your study sessions silently every day"
                         android:fontFamily="@font/inter_regular"
-                        android:textSize="14sp" android:textColor="@color/text_secondary"
-                        android:lineSpacingMultiplier="1.4" android:layout_marginBottom="20dp"/>
-
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="💡 Suggestions" android:fontFamily="@font/inter_medium"
-                        android:textSize="15sp" android:textColor="@color/text_primary"
-                        android:layout_marginBottom="6dp"/>
-
-                    <TextView android:id="@+id/tv_suggestions"
-                        android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_regular"
-                        android:textSize="14sp" android:textColor="@color/text_secondary"
-                        android:lineSpacingMultiplier="1.6" android:layout_marginBottom="16dp"/>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="match_parent" android:layout_height="wrap_content"
-                        app:cardBackgroundColor="@color/maroon_surface"
-                        app:cardCornerRadius="12dp" app:cardElevation="0dp">
-                        <TextView android:id="@+id/tv_encouragement"
-                            android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:fontFamily="@font/inter_regular"
-                            android:textSize="15sp" android:textColor="@color/maroon_primary"
-                            android:textStyle="italic" android:gravity="center"
-                            android:padding="16dp"/>
-                    </com.google.android.material.card.MaterialCardView>
-
+                        android:textSize="13sp"
+                        android:textColor="@color/text_secondary"/>
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
+                <!-- Stat row 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_mic_ring_inner"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🔔"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:text="Sends notifications if Medium or High burnout risk is detected"
+                        android:fontFamily="@font/inter_regular"
+                        android:textSize="13sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+
+                <!-- Stat row 3 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_mic_ring_inner"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="💙"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:text="Tap below to check your current risk level manually"
+                        android:fontFamily="@font/inter_regular"
+                        android:textSize="13sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Analyze button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_analyze_burnout"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Check My Burnout Risk"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="15sp"
+            android:textColor="@color/maroon_dark"
+            app:backgroundTint="@color/text_on_maroon"
+            app:cornerRadius="26dp"
+            app:elevation="0dp"/>
+
+        <!-- Progress bar -->
+        <ProgressBar
+            android:id="@+id/progress_burnout"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/maroon_dark"
+            android:visibility="gone"/>
+
+        <!-- Idle state text -->
+        <TextView
+            android:id="@+id/tv_burnout_idle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tap the button above to check your burnout risk based on your study activity this week."
+            android:fontFamily="@font/inter_regular"
+            android:textSize="13sp"
+            android:textColor="@color/text_hint"
+            android:gravity="center"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="24dp"
+            android:visibility="visible"/>
+
+        <!-- Error text -->
+        <TextView
+            android:id="@+id/tv_burnout_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:textSize="13sp"
+            android:textColor="@color/error_red"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:visibility="gone"/>
+
+        <!-- Result card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/layout_burnout_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/cream_card"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/border_light"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Risk level pill row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Risk Level"
+                        android:fontFamily="@font/playfair_display_bold"
+                        android:textSize="18sp"
+                        android:textColor="@color/text_primary"/>
+
+                    <TextView
+                        android:id="@+id/tv_risk_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        android:textSize="13sp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"/>
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/border_light"
+                    android:layout_marginBottom="14dp"/>
+
+                <!-- Analysis label -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📊  Analysis"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_hint"
+                    android:layout_marginBottom="6dp"/>
+
+                <TextView
+                    android:id="@+id/tv_burnout_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:lineSpacingMultiplier="1.5"
+                    android:layout_marginBottom="18dp"/>
+
+                <!-- Suggestions label -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💡  Suggestions"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_hint"
+                    android:layout_marginBottom="6dp"/>
+
+                <TextView
+                    android:id="@+id/tv_suggestions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:lineSpacingMultiplier="1.6"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Encouragement card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/maroon_dark"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp">
+                    <TextView
+                        android:id="@+id/tv_encouragement"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_on_maroon"
+                        android:textStyle="italic"
+                        android:gravity="center"
+                        android:padding="16dp"/>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
     </LinearLayout>
 </ScrollView>

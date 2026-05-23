@@ -21,6 +21,50 @@ class ExamOracleRepository(context: Context) {
     private val gson = Gson()
     private val appContext = context.applicationContext
 
+    suspend fun processMultiplePapers(
+        imageUris: List<Uri>,
+        paperName: String = ""
+    ): Result<ExamOracleResult> {
+        return try {
+            // OCR all images and combine text
+            val combinedText = imageUris.mapIndexed { i, uri ->
+                val text = extractTextFromUri(uri)
+                "=== PAPER ${i + 1} ===\n$text"
+            }.joinToString("\n\n")
+
+            if (combinedText.isBlank())
+                return Result.failure(Exception("No text found in any image"))
+
+            val meaningfulWords = combinedText.split("\\s+".toRegex())
+                .filter { it.length > 2 && it.all { c -> c.isLetter() } }
+            if (meaningfulWords.size < 10)
+                return Result.failure(Exception("Could not read the images clearly. Please ensure they are well-lit and in focus."))
+
+            val prompt = GeminiPrompts.examOracle(combinedText, paperName)
+            // Bypass cache for fresh results
+            val rawResponse = sendWithRetry(prompt).also {
+                CacheHelper.saveCache(appContext, combinedText, "exam", it)
+            }
+
+            val cleanJson = cleanJson(rawResponse, useObject = true)
+            val result = gson.fromJson(cleanJson, ExamOracleResult::class.java)
+
+            result.predictedTopics.forEach { topic ->
+                examTopicDao.insertTopic(
+                    ExamTopicEntity(
+                        topic = topic.topic,
+                        probability = topic.probability,
+                        questionsJson = gson.toJson(topic.practiceQuestions)
+                    )
+                )
+            }
+
+            Result.success(result)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     // Full pipeline: URI -> OCR -> Gemini -> JSON -> Room DB
     suspend fun processExamPaper(imageUri: Uri, paperName: String = ""): Result<ExamOracleResult> {
         return try {

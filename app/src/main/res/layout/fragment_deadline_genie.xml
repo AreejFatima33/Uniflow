@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cream_bg">
+    android:background="@color/cream_bg"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,116 +13,226 @@
 
         <!-- Header -->
         <FrameLayout
+            android:id="@+id/header_frame"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="180dp">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/bg_wavy_header"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                android:contentDescription="@null"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="20dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="24dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="44dp">
+
+                <!-- Back chevron -->
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="12dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_chevron_back"
+                    android:background="@drawable/bg_profile_chip"
+                    android:contentDescription="Back"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:elevation="6dp"/>
+
+                <!-- Title block -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="📑 DeadlineGenie"
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DeadlineGenie"
                         android:fontFamily="@font/playfair_display_bold"
-                        android:textSize="22sp" android:textColor="@color/text_on_maroon"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Enter details, then photograph your syllabus"
-                        android:fontFamily="@font/inter_regular"
-                        android:textSize="12sp" android:textColor="#CCF5F0EB"/>
+                        android:textSize="28sp"
+                        android:textColor="@color/text_on_maroon"
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Photo your syllabus, AI builds your plan"
+                        android:fontFamily="@font/inter_medium"
+                        android:textSize="12sp"
+                        android:textColor="#CCF5F0EB"/>
+                </LinearLayout>
+
+                <!-- Badge icon -->
+                <LinearLayout
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_mic_ring_inner"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_nav_scan"
+                        android:contentDescription="@null"/>
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>
 
-        <LinearLayout
+        <!-- Input card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/cream_card"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/border_light"
+            app:strokeWidth="1dp">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Subject Name (e.g. Data Structures)"
-                style="@style/UniFlow.TextInput"
-                android:layout_marginBottom="12dp">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etSubjectName"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Study Details"
+                    android:fontFamily="@font/playfair_display_bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/maroon_dark"
+                    android:layout_marginBottom="12dp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_regular"
-                    android:inputType="text"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="Subject Name (e.g. Data Structures)"
+                    style="@style/UniFlow.TextInput"
+                    android:layout_marginBottom="12dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etSubjectName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:inputType="text"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/exam_date_e_g_may_15_2026"
-                style="@style/UniFlow.TextInput"
-                android:layout_marginBottom="20dp">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etExamDate"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_regular"
-                    android:inputType="text"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Camera label + torch -->
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:gravity="center_vertical"
-                android:layout_marginBottom="8dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Camera Preview"
-                    android:fontFamily="@font/inter_medium"
-                    android:textSize="14sp" android:textColor="@color/text_primary"/>
-                <ImageButton
-                    android:id="@+id/btnTorch"
-                    android:layout_width="40dp" android:layout_height="40dp"
-                    android:src="@android:drawable/btn_star_big_on"
-                    android:background="@drawable/bg_profile_chip"
-                    android:contentDescription="Toggle torch"
-                    android:padding="8dp"
-                    app:tint="@color/maroon_primary"/>
+                    android:hint="Exam Date (e.g. May 15 2026)"
+                    style="@style/UniFlow.TextInput">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etExamDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:inputType="text"/>
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
+        <!-- Camera card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/cream_card"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/border_light"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
-                app:strokeColor="@color/border_light"
-                app:strokeWidth="1dp">
-                <androidx.camera.view.PreviewView
-                    android:id="@+id/previewView"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Camera label + torch row -->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"/>
-            </com.google.android.material.card.MaterialCardView>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp">
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Syllabus Preview"
+                        android:fontFamily="@font/playfair_display_bold"
+                        android:textSize="16sp"
+                        android:textColor="@color/maroon_dark"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnCapture"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="📷 Photograph Syllabus"
-                android:fontFamily="@font/inter_medium"
-                android:textSize="16sp"
-                style="@style/UniFlow.Button.Primary"/>
+                    <ImageButton
+                        android:id="@+id/btnTorch"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@android:drawable/btn_star_big_on"
+                        android:background="@drawable/bg_profile_chip"
+                        android:contentDescription="Toggle torch"
+                        android:padding="8dp"
+                        app:tint="@color/text_on_maroon"/>
+                </LinearLayout>
 
-        </LinearLayout>
+                <!-- Camera preview -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/border_light"
+                    app:strokeWidth="1dp">
+                    <androidx.camera.view.PreviewView
+                        android:id="@+id/previewView"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Progress bar -->
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    android:indeterminateTint="@color/maroon_dark"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- Capture button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCapture"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="Photograph Syllabus"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="15sp"
+                    android:textColor="@color/maroon_dark"
+                    app:backgroundTint="@color/text_on_maroon"
+                    app:cornerRadius="26dp"
+                    app:elevation="0dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</ScrollView>

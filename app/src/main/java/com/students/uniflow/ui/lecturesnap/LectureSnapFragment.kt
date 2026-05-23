@@ -10,9 +10,11 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.students.uniflow.R
 import com.students.uniflow.utils.CameraHelper
+import kotlinx.coroutines.launch
 
 class LectureSnapFragment : Fragment() {
 
@@ -71,10 +73,17 @@ class LectureSnapFragment : Fragment() {
                     progressBar.visibility = View.GONE
                     btnCapture.isEnabled = true
                     val bundle = Bundle().apply {
-                        putString("title",    state.result.title)
-                        putString("summary",   state.result.summary)
+                        putString("title",   state.result.title)
+                        putString("summary", state.result.summary)
                         putStringArrayList("keyPoints", ArrayList(state.result.keyPoints))
+                        putString("flashcardsJson", com.google.gson.Gson().toJson(state.result.flashcards))
+                        putString("quizJson",       com.google.gson.Gson().toJson(state.result.quizQuestions))
                     }
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        com.students.uniflow.data.repository.BurnoutRepository(requireContext())
+                            .logStudySession("LectureSnap", 15)
+                    }
+                    // ADD THIS ↑
                     findNavController().navigate(R.id.action_lectureSnap_to_lectureResult, bundle)
                 }
                 is LectureUiState.Error -> {
