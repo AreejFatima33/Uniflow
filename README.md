@@ -19,13 +19,13 @@
 
 ## 🎯 The Problem
 
-University students manage too many things manually — and fail at all of them:
+University students manage too many things manually and fail at all of them:
 
 - **Lecture notes** are taken by hand, rarely reviewed, almost never organized
-- **Exam preparation** is panic-driven — no student knows which topics actually repeat across past papers
-- **Timetables** are photographed in orientation week and never acted on — classes are missed
+- **Exam preparation** is panic-driven no student knows which topics actually repeat across past papers
+- **Timetables** are photographed in orientation week and never acted on classes are missed
 - **Study plans** are written on paper, ignored by day three
-- **Burnout** hits silently — students don't notice until they stop functioning
+- **Burnout** hits silently students don't notice until they stop functioning
 
 **UniFlow** replaces all of that. One app. Student takes a photo or speaks. AI does the rest.
 
@@ -60,7 +60,7 @@ University students manage too many things manually — and fail at all of them:
 
 ## ⚡ The Core AI Pipeline
 
-Every feature in UniFlow follows the same pattern — built once, reused across all 8 tools:
+Every feature in UniFlow follows the same pattern built once, reused across all 8 tools:
 
 ```
 Student takes photo  OR  speaks
@@ -86,7 +86,7 @@ Learn this pipeline once. It powers everything.
 | 2 | **TimetableSnap** | Photos class timetable | App parses schedule, sets all recurring class reminders |
 | 3 | **ExamOracle** | Scans past exam papers | AI analyzes topic patterns, predicts high-probability questions |
 | 4 | **DeadlineGenie** | Photos syllabus + exam date | AI builds a complete day-by-day study plan |
-| 5 | **BurnoutRadar** | Nothing — runs silently | Monitors study patterns, alerts before burnout hits |
+| 5 | **BurnoutRadar** | Nothing runs silently | Monitors study patterns, alerts before burnout hits |
 | 6 | **ConceptSnap** | Photos a diagram or formula | AI explains it in simple words with a real-life analogy |
 | 7 | **GradePredictor** | Enters current marks | App calculates what final exam score is needed per grade |
 | 8 | **VoiceReminder** | Speaks a reminder naturally | AI extracts task + time → schedules the alarm automatically |
@@ -96,25 +96,25 @@ Learn this pipeline once. It powers everything.
 ## ✨ Feature Details
 
 ### 📄 ExamOracle
-Point the camera at any past exam paper. ML Kit extracts all the questions. Gemini AI analyzes topic patterns across multiple papers and returns a ranked list of high-probability topics with 3 practice questions per topic — so students study what actually comes, not what they hope comes.
+Point the camera at any past exam paper. ML Kit extracts all the questions. Gemini AI analyzes topic patterns across multiple papers and returns a ranked list of high-probability topics with 3 practice questions per topic so students study what actually comes, not what they hope comes.
 
 ### 📅 DeadlineGenie
-Photo the syllabus. Enter the exam date. Gemini reads every topic and deadline, then generates a structured day-by-day study calendar — allocated by topic weight, spaced for review sessions. No guesswork. No procrastination.
+Photo the syllabus. Enter the exam date. Gemini reads every topic and deadline, then generates a structured day-by-day study calendar allocated by topic weight, spaced for review sessions. No guesswork. No procrastination.
 
 ### 💡 ConceptSnap
-Point camera at any diagram, formula, or confusing concept from a textbook. The image goes directly to Gemini Vision — no OCR needed. Gemini explains it in plain language with a real-life analogy that makes it stick.
+Point camera at any diagram, formula, or confusing concept from a textbook. The image goes directly to Gemini Vision no OCR needed. Gemini explains it in plain language with a real-life analogy that makes it stick.
 
 ### 🧠 LectureSnap
-Photo handwritten or typed lecture notes. ML Kit reads the text. Gemini returns a structured response: paragraph summary, numbered key points, flashcard pairs, and ready-to-use quiz questions — all saved to Room DB for offline review.
+Photo handwritten or typed lecture notes. ML Kit reads the text. Gemini returns a structured response: paragraph summary, numbered key points, flashcard pairs, and ready-to-use quiz questions all saved to Room DB for offline review.
 
 ### 🗓️ TimetableSnap
 Photo the semester timetable from the university notice board. Gemini parses it into a clean `{day, time, subject, teacher, room}` JSON. AlarmManager sets a recurring reminder 10 minutes before every class. Students never miss a lecture again.
 
 ### 🔥 BurnoutRadar
-No screen. No input. Runs silently in the background using WorkManager. Every study session — duration, quiz score, session frequency — is logged to Room DB. A nightly background job sends this data to Gemini AI. If the pattern indicates burnout risk, an FCM notification fires with specific rest advice.
+No screen. No input. Runs silently in the background using WorkManager. Every study session duration, quiz score, session frequency is logged to Room DB. A nightly background job sends this data to Gemini AI. If the pattern indicates burnout risk, an FCM notification fires with specific rest advice.
 
 ### 📊 GradePredictor
-A straightforward calculator with a clean chart UI. Student enters quiz marks, assignment marks, and midterm score. The app computes what final exam percentage is needed to achieve each grade — A, B, C — and shows it as a visual bar chart.
+A straightforward calculator with a clean chart UI. Student enters quiz marks, assignment marks, and midterm score. The app computes what final exam percentage is needed to achieve each grade A, B, C and shows it as a visual bar chart.
 
 ### 🎙️ VoiceReminder
 Tap the mic, speak naturally: *"Remind me to submit my assignment tomorrow at 3 PM."* SpeechRecognizer captures it. Gemini extracts `{task, date, time}` as JSON. AlarmManager schedules the exact notification. No typing required.
@@ -135,7 +135,7 @@ app/
     │
     ├── data/
     │   ├── local/
-    │   │   ├── AppDatabase.kt              # Room DB — central database
+    │   │   ├── AppDatabase.kt              # Room DB central database
     │   │   ├── entity/
     │   │   │   ├── NoteEntity.kt           # Lecture notes
     │   │   │   ├── TimetableEntity.kt      # Class schedule
@@ -207,22 +207,22 @@ app/
 ## ⚙️ Key Engineering Decisions
 
 ### 1. Single AI Pipeline, Eight Features
-Rather than building eight separate AI integrations, all features share the same `GeminiClient.kt` and `OcrHelper.kt`. The only thing that changes per feature is the **prompt** in `GeminiPrompts.kt`. Adding a new AI feature is adding one prompt and one repository — not rebuilding the pipeline.
+Rather than building eight separate AI integrations, all features share the same `GeminiClient.kt` and `OcrHelper.kt`. The only thing that changes per feature is the **prompt** in `GeminiPrompts.kt`. Adding a new AI feature is adding one prompt and one repository not rebuilding the pipeline.
 
 ### 2. ML Kit OCR Before Gemini (Cost Control)
-Text-based features (LectureSnap, TimetableSnap, ExamOracle, DeadlineGenie) use ML Kit to extract text locally — **free, offline, fast** — before sending anything to Gemini. Only ConceptSnap sends the image directly to Gemini Vision because it needs spatial understanding of diagrams. This design minimizes API token usage significantly.
+Text-based features (LectureSnap, TimetableSnap, ExamOracle, DeadlineGenie) use ML Kit to extract text locally **free, offline, fast** before sending anything to Gemini. Only ConceptSnap sends the image directly to Gemini Vision because it needs spatial understanding of diagrams. This design minimizes API token usage significantly.
 
-### 3. Gemini Returns Structured JSON — Always
+### 3. Gemini Returns Structured JSON Always
 Every Gemini prompt in `GeminiPrompts.kt` explicitly instructs the model to return structured JSON. Responses are parsed with Gson into typed model classes. No regex. No string manipulation. Clean deserialization at every feature.
 
 ### 4. Room DB as the Offline Layer
 Seven Room entities with dedicated DAOs mean every feature's output is immediately persisted locally. If the network drops after a scan, the result is still there. Students can review past ExamOracle predictions, old study plans, and saved notes without any connectivity.
 
 ### 5. WorkManager for BurnoutRadar
-BurnoutRadar cannot rely on the student opening the app — it must run in the background. WorkManager handles this correctly across Android versions, survives process death, and integrates with the system's battery optimization without being killed. The nightly job checks `StudyLogEntity` and only fires an FCM alert when Gemini confirms burnout risk.
+BurnoutRadar cannot rely on the student opening the app it must run in the background. WorkManager handles this correctly across Android versions, survives process death, and integrates with the system's battery optimization without being killed. The nightly job checks `StudyLogEntity` and only fires an FCM alert when Gemini confirms burnout risk.
 
 ### 6. AlarmManager for Class Reminders
-TimetableSnap uses `AlarmManager` with `setExact()` to schedule recurring class reminders — not `WorkManager`, which has minimum 15-minute intervals. Class schedules require minute-level precision. The schedule is rebuilt from `TimetableEntity` on device restart via a `BroadcastReceiver`.
+TimetableSnap uses `AlarmManager` with `setExact()` to schedule recurring class reminders not `WorkManager`, which has minimum 15-minute intervals. Class schedules require minute-level precision. The schedule is rebuilt from `TimetableEntity` on device restart via a `BroadcastReceiver`.
 
 ---
 
