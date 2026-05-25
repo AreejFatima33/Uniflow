@@ -46,8 +46,8 @@ University students manage too many things manually and fail at all of them:
   </tr>
   <tr>
     <td align="center"><img src="./Conceptsnap_camera.jpeg" width="180"/><br/><sub>📷 ConceptSnap · Diagram Scan</sub></td>
-    <td align="center"><img src="./conceptsnap_result_2.jpeg" width="180"/><br/><sub>💡 AI Concept Explanation</sub></td>
-    <td align="center"><img src="./lecturesnap_result_2.jpeg" width="180"/><br/><sub>🧠 LectureSnap · AI Quiz</sub></td>
+    <td align="center"><img src="./conceptsnap_result.jpeg" width="180"/><br/><sub>💡 AI Concept Explanation</sub></td>
+    <td align="center"><img src="./lecturesnap_result.jpeg" width="180"/><br/><sub>🧠 LectureSnap · AI Quiz</sub></td>
   </tr>
   <tr>
     <td align="center"><img src="./Timetable_result.jpeg" width="180"/><br/><sub>🗓️ My Schedule · Auto Reminders</sub></td>
