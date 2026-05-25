@@ -35,7 +35,7 @@ University students manage too many things manually and fail at all of them:
 
 <table align="center">
   <tr>
-    <td align="center"><img src="./homescreen_areej.jpeg" width="180"/><br/><sub>🏠 Home · GradePredictor</sub></td>
+    <td align="center"><img src="./homescreen.jpeg" width="180"/><br/><sub>🏠 Home · GradePredictor</sub></td>
     <td align="center"><img src="./Homscreen2.jpeg" width="180"/><br/><sub>⚡ TimetableSnap · ExamOracle</sub></td>
     <td align="center"><img src="./Homscreen3.jpeg" width="180"/><br/><sub>🛠️ ConceptSnap · VoiceReminder</sub></td>
   </tr>
@@ -52,6 +52,7 @@ University students manage too many things manually and fail at all of them:
   <tr>
     <td align="center"><img src="./Timetable_result.jpeg" width="180"/><br/><sub>🗓️ My Schedule · Auto Reminders</sub></td>
     <td align="center"><img src="./voicereminder_with_notification.jpeg" width="180"/><br/><sub>🎙️ VoiceReminder · Speak → Alarm</sub></td>
+    <td align="center"><img src="./gradepredictor_result.jpeg" width="180"/><br/><sub>🎙️ Gradepredictor · Grade → Predict </sub></td>
     <td align="center"></td>
   </tr>
 </table>
