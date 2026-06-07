@@ -1,14 +1,5 @@
 package com.students.uniflow.data.model
 
-// Shape of JSON returned by Gemini for LectureSnap
-// Example JSON:
-// {
-//   "title": "Newton's Laws",
-//   "summary": "...",
-//   "keyPoints": ["...", "..."],
-//   "flashcards": [{"question":"...","answer":"..."}],
-//   "quizQuestions": [{"question":"...","options":["A","B","C","D"],"answer":"A"}]
-// }
 
 data class NoteResult(
     val title: String = "",
