@@ -341,7 +341,7 @@ implementation 'com.google.android.material:material:1.11.0'
 
 **Areej Fatima** · Flutter & Android Developer 
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-F0A500?style=flat-square)](https://areejfatima33.github.io/areej-portfolio/)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-F0A500?style=flat-square)](https://areejdev-portfolio.vercel.app)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/areej-dev01/)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat-square&logo=github)](https://github.com/AreejFatima33)
 [![Play Store](https://img.shields.io/badge/Play_Store-See_Apps-34A853?style=flat-square&logo=google-play)](https://play.google.com/store/apps/developer?id=Areexa+Studios)
@@ -349,5 +349,5 @@ implementation 'com.google.android.material:material:1.11.0'
 ---
 
 <div align="center">
-  <sub>Built as Final Year Project · Native Android · Kotlin · Gemini AI</sub>
+  <sub>Built as Contract Project · Native Android · Kotlin · Gemini AI</sub>
 </div>
